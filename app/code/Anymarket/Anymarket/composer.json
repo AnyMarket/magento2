@@ -1,0 +1,21 @@
+{
+    "name": "anymarket/module-anymarket",
+    "description": "Anymarket Integration",
+    "license": "proprietary",
+    "authors": [
+        {
+            "name": "Anymarket",
+            "email": "anymarket@anymarket.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Anymarket\\Anymarket\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}
