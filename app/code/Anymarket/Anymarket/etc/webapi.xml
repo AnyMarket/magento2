@@ -3,7 +3,13 @@
 	<route method="POST" url="/V1/anymarket/order">
 		<service class="Anymarket\Anymarket\Api\OrderManagementInterface" method="postOrder"/>
 		<resources>
-			<resource ref="anonymous"/>
+			<resource ref="self"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/anymarket/products/getConfig/:idProduct">
+		<service class="Anymarket\Anymarket\Api\ProductManagementInterface" method="getConfigurableBySimple"/>
+		<resources>
+			<resource ref="self"/>
 		</resources>
 	</route>
 </routes>
