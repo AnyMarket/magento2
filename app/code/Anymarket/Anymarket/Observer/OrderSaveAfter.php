@@ -16,7 +16,8 @@ class OrderSaveAfter implements ObserverInterface
      */
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager
-    ) {
+    )
+    {
         $this->_objectManager = $objectManager;
     }
 
@@ -31,15 +32,18 @@ class OrderSaveAfter implements ObserverInterface
         $helper = $this->_objectManager->create('Anymarket\Anymarket\Helper\Data');
 
         $enabled = $helper->getGeneralConfig('anyConfig/general/enable');
-        if($enabled == "1"){
-            $order = $observer->getEvent()->getOrder();
+        if ($enabled == "1") {
+            $orderIds = $observer->getEvent()->getOrderIds();
+            if (count($orderIds) > 0) {
+                $orderId = $orderIds[0];
 
-            $oi = $helper->getGeneralConfig('anyConfig/general/oi');
-            $host = $helper->getGeneralConfig('anyConfig/general/host');
+                $oi = $helper->getGeneralConfig('anyConfig/general/oi');
+                $host = $helper->getGeneralConfig('anyConfig/general/host');
 
-            $host = $host."/public/api/anymarketcallback/order/".$oi."/MAGENTO_2/".ScopeInterface::SCOPE_STORE."/".$order->getId();
+                $host = $host . "/public/api/anymarketcallback/order/" . $oi . "/MAGENTO_2/" . ScopeInterface::SCOPE_STORE . "/" . $orderId;
 
-            $helper->doCallAnymarket($host);
+                $helper->doCallAnymarket($host);
+            }
         }
     }
 }
