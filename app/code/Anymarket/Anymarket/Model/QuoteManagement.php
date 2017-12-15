@@ -28,7 +28,7 @@ class QuoteManagement
 
         foreach ($quoteMg->getAllItems() as $itemQ) {
             $sku = $itemQ->getData('sku');
-var_dump($sku);
+
             foreach ($items as $prdJson) {
                 $data = $prdJson->getData();
                 if($data['sku'] == $sku){
