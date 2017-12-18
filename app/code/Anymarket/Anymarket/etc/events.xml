@@ -6,4 +6,7 @@
 	<event name="checkout_onepage_controller_success_action">
 		<observer instance="Anymarket\Anymarket\Observer\OrderSaveAfter" name="Anymarket_Anymarket_Order_Save_After"/>
 	</event>
+	<event name="sales_quote_address_collect_totals_after">
+		<observer instance="Anymarket\Anymarket\Observer\CollectTotalsAfter" name="Anymarket_Anymarket_Collect_Totals_After"/>
+	</event>
 </config>

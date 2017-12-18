@@ -12,10 +12,12 @@ class QuoteManagement
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Quote\Model\QuoteFactory $quoteFactory
+        \Magento\Quote\Model\QuoteFactory $quoteFactory,
+        \Magento\Quote\Api\CartRepositoryInterface $quoteRepository
     ) {
         $this->_storeManager = $storeManager;
         $this->quoteFactory = $quoteFactory;
+        $this->quoteRepository = $quoteRepository;
     }
 
     /**
@@ -43,9 +45,29 @@ class QuoteManagement
                     break;
                 }
             }
-
         }
+    }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function putShippingAmount($idCart, $shipAmount)
+    {
+        $quote = $this->quoteRepository->getActive($idCart);
+
+        $quote->getShippingAddress()->setShippingAmount($shipAmount);
+        $quote->getShippingAddress()->setBaseShippingAmount($shipAmount);
+
+        $actBaseSubTotal = $quote->getShippingAddress()->getBaseSubtotal();
+        $newGrandTotal = $actBaseSubTotal + $shipAmount;
+        $quote->getShippingAddress()->setGrandTotal($newGrandTotal);
+        $quote->getShippingAddress()->setBaseGrandTotal($newGrandTotal);
+
+        $quote->setGrandTotal($newGrandTotal);
+        $quote->setBaseGrandTotal($newGrandTotal);
+
+        $quote->getShippingAddress()->collectShippingRates();
+        $quote->save();
     }
 
 }
