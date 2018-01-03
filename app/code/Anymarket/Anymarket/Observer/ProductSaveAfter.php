@@ -24,7 +24,7 @@ class ProductSaveAfter implements ObserverInterface
      * customer register event handler
      *
      * @param \Magento\Framework\Event\Observer $observer
-     * @return void
+     * @return $this
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
@@ -35,6 +35,11 @@ class ProductSaveAfter implements ObserverInterface
         if($enabled == "1" && $canSyncProduct == "1"){
             $product = $observer->getEvent()->getProduct();
 
+            $attrIntegration = $helper->getGeneralConfig('anyConfig/general/attr_integration_anymarket');
+            if(!$product->getData($attrIntegration)){
+                return $this;
+            }
+
             $oi = $helper->getGeneralConfig('anyConfig/general/oi');
             $host = $helper->getGeneralConfig('anyConfig/general/host');
 
@@ -42,5 +47,6 @@ class ProductSaveAfter implements ObserverInterface
 
             $helper->doCallAnymarket($host);
         }
+        return $this;
     }
 }

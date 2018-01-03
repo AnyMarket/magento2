@@ -12,7 +12,7 @@ class AnymarketConfiguration implements \Anymarket\Anymarket\Api\Data\AnymarketC
      *
      * @var string
      */
-    protected $_sendOrder = "";
+    protected $_sendOrder = "0";
 
     /**
      * SendProduct
@@ -21,7 +21,16 @@ class AnymarketConfiguration implements \Anymarket\Anymarket\Api\Data\AnymarketC
      *
      * @var string
      */
-    protected $_sendProduct = null;
+    protected $_sendProduct = "0";
+
+    /**
+     * AttrIntegrationAny
+     *
+     * item for anymarket method
+     *
+     * @var string
+     */
+    protected $_attrIntegrationAny = "";
 
     public function __construct(\Magento\Framework\App\Helper\Context $context)
     {
@@ -68,6 +77,28 @@ class AnymarketConfiguration implements \Anymarket\Anymarket\Api\Data\AnymarketC
     public function setSendProduct(String $canSendProduct)
     {
         $this->_sendProduct = $canSendProduct;
+        return $this;
+    }
+
+    /**
+     * Returns attr_integration_any
+     *
+     * @return string
+     */
+    public function getAttrIntegrationAny()
+    {
+        return $this->_attrIntegrationAny;
+    }
+
+    /**
+     * Sets attr_integ_any
+     *
+     * @param string $attrIntegrationAny
+     * @return $this
+     */
+    public function setAttrIntegrationAny(String $attrIntegrationAny)
+    {
+        $this->_attrIntegrationAny = $attrIntegrationAny;
         return $this;
     }
 }

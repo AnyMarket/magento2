@@ -12,6 +12,8 @@ interface AnymarketConfigurationInterface extends \Magento\Framework\Api\Extensi
 
     const KEY_SEND_PRODUCT = 'sendProduct';
 
+    const KEY_ATTR_INTEGRATION_ANY = 'attrIntegrationAny';
+
     /**
      * Returns send_order
      *
@@ -27,7 +29,6 @@ interface AnymarketConfigurationInterface extends \Magento\Framework\Api\Extensi
      */
     public function setSendOrder(String $canSendOrder);
 
-
     /**
      * Returns send_product
      *
@@ -42,6 +43,21 @@ interface AnymarketConfigurationInterface extends \Magento\Framework\Api\Extensi
      * @return $this
      */
     public function setSendProduct(String $canSendProduct);
+
+    /**
+     * Returns attr_integration_any
+     *
+     * @return string
+     */
+    public function getAttrIntegrationAny();
+
+    /**
+     * Sets attr_integ_any
+     *
+     * @param string $attrIntegrationAny
+     * @return $this
+     */
+    public function setAttrIntegrationAny(String $attrIntegrationAny);
 
 
 }

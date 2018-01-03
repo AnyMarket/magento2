@@ -33,6 +33,10 @@
                     <comment>Dados de controle Anymarket (Não alterar).</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="attr_integration_anymarket" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Integrar Anymarket</label>
+                    <comment>Dados de controle Anymarket (Não alterar).</comment>
+                </field>
             </group>
         </section>
     </system>
