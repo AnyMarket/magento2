@@ -25,18 +25,22 @@ class OrderSaveAfter implements ObserverInterface
      * customer register event handler
      *
      * @param \Magento\Framework\Event\Observer $observer
-     * @return void
+     * @return $this
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $helper = $this->_objectManager->create('Anymarket\Anymarket\Helper\Data');
 
         $enabled = $helper->getGeneralConfig('anyConfig/general/enable');
-        $canCreateOrder = $helper->getGeneralConfig('anyConfig/general/create_order_in_anymarket');
-        if ($enabled == "1" && $canCreateOrder == "1") {
-            $orderIds = $observer->getEvent()->getOrderIds();
-            if (count($orderIds) > 0) {
-                $orderId = $orderIds[0];
+        if ($enabled == "1") {
+            $order = $observer->getEvent()->getOrder();
+            if ($order instanceof \Magento\Framework\Model\AbstractModel) {
+                $canCreateOrder = $helper->getGeneralConfig('anyConfig/general/create_order_in_anymarket');
+                if($this->isNewOrder($order) && $canCreateOrder == "0"){
+                    return $this;
+                }
+
+                $orderId = $order->getId();
 
                 $oi = $helper->getGeneralConfig('anyConfig/general/oi');
                 $host = $helper->getGeneralConfig('anyConfig/general/host');
@@ -46,5 +50,12 @@ class OrderSaveAfter implements ObserverInterface
                 $helper->doCallAnymarket($host);
             }
         }
+        return $this;
     }
+
+    private function isNewOrder($order)
+    {
+        return $order->getData('created_at') == $order->getData('updated_at');
+    }
+
 }

@@ -3,7 +3,7 @@
 	<event name="controller_action_catalog_product_save_entity_after">
 		<observer instance="Anymarket\Anymarket\Observer\ProductSaveAfter" name="Anymarket_Anymarket_Product_Save_After"/>
 	</event>
-	<event name="checkout_onepage_controller_success_action">
+	<event name="sales_order_save_after">
 		<observer instance="Anymarket\Anymarket\Observer\OrderSaveAfter" name="Anymarket_Anymarket_Order_Save_After"/>
 	</event>
 	<event name="sales_quote_address_collect_totals_after">
