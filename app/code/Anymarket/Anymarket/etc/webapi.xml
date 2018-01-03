@@ -18,4 +18,10 @@
 			<resource ref="self"/>
 		</resources>
 	</route>
+	<route method="PUT" url="/V1/anymarket/configuration">
+		<service class="Anymarket\Anymarket\Api\ConfigurationManagementInterface" method="putConfiguration"/>
+		<resources>
+			<resource ref="self"/>
+		</resources>
+	</route>
 </routes>

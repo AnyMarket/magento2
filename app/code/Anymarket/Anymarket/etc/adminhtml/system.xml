@@ -23,6 +23,16 @@
                     <label>HOST</label>
                     <comment>Endereço para integração.</comment>
                 </field>
+                <field id="create_order_in_anymarket" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Criar pedido no Anymarket</label>
+                    <comment>Dados de controle Anymarket (Não alterar).</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="create_product_in_anymarket" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Criar produto no Anymarket</label>
+                    <comment>Dados de controle Anymarket (Não alterar).</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
             </group>
         </section>
     </system>

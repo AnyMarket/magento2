@@ -31,7 +31,8 @@ class ProductSaveAfter implements ObserverInterface
         $helper = $this->_objectManager->create('Anymarket\Anymarket\Helper\Data');
 
         $enabled = $helper->getGeneralConfig('anyConfig/general/enable');
-        if($enabled == "1"){
+        $canSyncProduct = $helper->getGeneralConfig('anyConfig/general/create_product_in_anymarket');
+        if($enabled == "1" && $canSyncProduct == "1"){
             $product = $observer->getEvent()->getProduct();
 
             $oi = $helper->getGeneralConfig('anyConfig/general/oi');

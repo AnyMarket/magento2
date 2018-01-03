@@ -32,7 +32,8 @@ class OrderSaveAfter implements ObserverInterface
         $helper = $this->_objectManager->create('Anymarket\Anymarket\Helper\Data');
 
         $enabled = $helper->getGeneralConfig('anyConfig/general/enable');
-        if ($enabled == "1") {
+        $canCreateOrder = $helper->getGeneralConfig('anyConfig/general/create_order_in_anymarket');
+        if ($enabled == "1" && $canCreateOrder == "1") {
             $orderIds = $observer->getEvent()->getOrderIds();
             if (count($orderIds) > 0) {
                 $orderId = $orderIds[0];
