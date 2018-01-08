@@ -9,31 +9,34 @@
             <label>Anymarket</label>
             <tab>anymarket</tab>
             <resource>Anymarket_Anymarket::anymarket_configuration</resource>
-            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>General Configuration</label>
-                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Module Enable</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="oi" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="oi" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>OI</label>
                     <comment>Entre em contato com o Anymarket para obter seu OI.</comment>
                 </field>
-                <field id="host" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="host" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>HOST</label>
                     <comment>Endereço para integração.</comment>
                 </field>
-                <field id="create_order_in_anymarket" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+            </group>
+            <group id="support" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Suporte</label>
+                <field id="create_order_in_anymarket" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Criar pedido no Anymarket</label>
                     <comment>Dados de controle Anymarket (Não alterar).</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="create_product_in_anymarket" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="create_product_in_anymarket" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Criar produto no Anymarket</label>
                     <comment>Dados de controle Anymarket (Não alterar).</comment>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="attr_integration_anymarket" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="attr_integration_anymarket" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Integrar Anymarket</label>
                     <comment>Dados de controle Anymarket (Não alterar).</comment>
                 </field>

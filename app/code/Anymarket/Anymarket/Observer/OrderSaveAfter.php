@@ -35,7 +35,7 @@ class OrderSaveAfter implements ObserverInterface
         if ($enabled == "1") {
             $order = $observer->getEvent()->getOrder();
             if ($order instanceof \Magento\Framework\Model\AbstractModel) {
-                $canCreateOrder = $helper->getGeneralConfig('anyConfig/general/create_order_in_anymarket');
+                $canCreateOrder = $helper->getGeneralConfig('anyConfig/support/create_order_in_anymarket');
                 if($this->isNewOrder($order) && $canCreateOrder == "0"){
                     return $this;
                 }

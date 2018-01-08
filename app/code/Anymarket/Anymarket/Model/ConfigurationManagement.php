@@ -24,9 +24,9 @@ class ConfigurationManagement
         $sendProduct = $configuration->getSendProduct();
         $attrIntegAny = $configuration->getAttrIntegrationAny();
 
-        $this->_sconfigManager->save('anyConfig/general/create_order_in_anymarket', $sendOrder);
-        $this->_sconfigManager->save('anyConfig/general/create_product_in_anymarket', $sendProduct);
-        $this->_sconfigManager->save('anyConfig/general/attr_integration_anymarket', $attrIntegAny);
+        $this->_sconfigManager->save('anyConfig/support/create_order_in_anymarket', $sendOrder);
+        $this->_sconfigManager->save('anyConfig/support/create_product_in_anymarket', $sendProduct);
+        $this->_sconfigManager->save('anyConfig/support/attr_integration_anymarket', $attrIntegAny);
         return "";
     }
 
