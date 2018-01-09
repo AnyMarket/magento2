@@ -24,15 +24,21 @@ class ProductSaveAfter implements ObserverInterface
      * customer register event handler
      *
      * @param \Magento\Framework\Event\Observer $observer
-     * @return void
+     * @return $this
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $helper = $this->_objectManager->create('Anymarket\Anymarket\Helper\Data');
 
         $enabled = $helper->getGeneralConfig('anyConfig/general/enable');
-        if($enabled == "1"){
+        $canSyncProduct = $helper->getGeneralConfig('anyConfig/support/create_product_in_anymarket');
+        if($enabled == "1" && $canSyncProduct == "1"){
             $product = $observer->getEvent()->getProduct();
+
+            $attrIntegration = $helper->getGeneralConfig('anyConfig/support/attr_integration_anymarket');
+            if($product->getData($attrIntegration) != "1"){
+                return $this;
+            }
 
             $oi = $helper->getGeneralConfig('anyConfig/general/oi');
             $host = $helper->getGeneralConfig('anyConfig/general/host');
@@ -41,5 +47,6 @@ class ProductSaveAfter implements ObserverInterface
 
             $helper->doCallAnymarket($host);
         }
+        return $this;
     }
 }

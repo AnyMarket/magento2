@@ -2,5 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 	<preference for="Anymarket\Anymarket\Api\QuoteManagementInterface" type="Anymarket\Anymarket\Model\QuoteManagement"/>
 	<preference for="Anymarket\Anymarket\Api\ProductManagementInterface" type="Anymarket\Anymarket\Model\ProductManagement"/>
+	<preference for="Anymarket\Anymarket\Api\ConfigurationManagementInterface" type="Anymarket\Anymarket\Model\ConfigurationManagement"/>
 	<preference for="Anymarket\Anymarket\Api\Data\AnymarketCartItemsInterface" type="Anymarket\Anymarket\Model\Data\AnymarketCartItems"/>
+	<preference for="Anymarket\Anymarket\Api\Data\AnymarketConfigurationInterface" type="Anymarket\Anymarket\Model\Data\AnymarketConfiguration"/>
 </config>
