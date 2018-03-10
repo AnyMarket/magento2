@@ -1,13 +1,25 @@
 <?xml version="1.0" ?>
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
-	<route method="PUT" url="/V1/anymarket/carts/:idCart">
-		<service class="Anymarket\Anymarket\Api\QuoteManagementInterface" method="putItemsPrice"/>
+	<route method="GET" url="/V1/anymarket/products/getConfig/:idProduct">
+		<service class="Anymarket\Anymarket\Api\ProductManagementInterface" method="getConfigurableBySimple"/>
 		<resources>
 			<resource ref="self"/>
 		</resources>
 	</route>
-	<route method="GET" url="/V1/anymarket/products/getConfig/:idProduct">
-		<service class="Anymarket\Anymarket\Api\ProductManagementInterface" method="getConfigurableBySimple"/>
+	<route method="GET" url="/V1/anymarket/shipping/methods">
+		<service class="Anymarket\Anymarket\Api\ShippingMethodInterface" method="getShippingMethods"/>
+		<resources>
+			<resource ref="self"/>
+		</resources>
+	</route>
+	<route method="GET" url="/V1/anymarket/payment/methods">
+		<service class="Anymarket\Anymarket\Api\PaymentMethodInterface" method="getPaymentMethods"/>
+		<resources>
+			<resource ref="self"/>
+		</resources>
+	</route>
+	<route method="PUT" url="/V1/anymarket/carts/:idCart">
+		<service class="Anymarket\Anymarket\Api\QuoteManagementInterface" method="putItemsPrice"/>
 		<resources>
 			<resource ref="self"/>
 		</resources>
