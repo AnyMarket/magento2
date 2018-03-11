@@ -6,6 +6,12 @@
 			<resource ref="self"/>
 		</resources>
 	</route>
+	<route method="GET" url="/V1/anymarket/version">
+		<service class="Anymarket\Anymarket\Api\VersionInterface" method="getVersion"/>
+		<resources>
+			<resource ref="self"/>
+		</resources>
+	</route>
 	<route method="GET" url="/V1/anymarket/shipping/methods">
 		<service class="Anymarket\Anymarket\Api\ShippingMethodInterface" method="getShippingMethods"/>
 		<resources>
