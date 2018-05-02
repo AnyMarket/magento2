@@ -37,8 +37,8 @@ class QuoteManagement
                     $itemId = $itemQ->getData('item_id');
 
                     $item = $quoteMg->getItemById($itemId);
-                    $item->setQty((double) $data['qty']);
                     $item->setCustomPrice($data['price']);
+                    $item->setPrice($data['price']);
                     $item->setOriginalCustomPrice($data['price']);
                     $item->getProduct()->setIsSuperMode(true);
                     $item->save();
