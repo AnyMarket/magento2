@@ -29,21 +29,23 @@ class OrderSaveAfter implements ObserverInterface
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
+        $order = $observer->getEvent()->getOrder();
+        $storeId = $order->getStoreId();
+
         $helper = $this->_objectManager->create('Anymarket\Anymarket\Helper\Data');
 
-        $enabled = $helper->getGeneralConfig('anyConfig/general/enable');
+        $enabled = $helper->getGeneralConfig('anyConfig/general/enable', $storeId);
         if ($enabled == "1") {
-            $order = $observer->getEvent()->getOrder();
             if ($order instanceof \Magento\Framework\Model\AbstractModel) {
-                $canCreateOrder = $helper->getGeneralConfig('anyConfig/support/create_order_in_anymarket');
+                $canCreateOrder = $helper->getGeneralConfig('anyConfig/support/create_order_in_anymarket', $storeId);
                 if($this->isNewOrder($order) && $canCreateOrder == "0"){
                     return $this;
                 }
 
                 $orderId = $order->getId();
 
-                $oi = $helper->getGeneralConfig('anyConfig/general/oi');
-                $host = $helper->getGeneralConfig('anyConfig/general/host');
+                $oi = $helper->getGeneralConfig('anyConfig/general/oi', $storeId);
+                $host = $helper->getGeneralConfig('anyConfig/general/host', $storeId);
 
                 $host = $host . "/public/api/anymarketcallback/order/" . $oi . "/MAGENTO_2/" . ScopeInterface::SCOPE_STORE . "/" . $orderId;
 

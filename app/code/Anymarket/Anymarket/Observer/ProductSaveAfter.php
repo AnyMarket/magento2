@@ -28,20 +28,21 @@ class ProductSaveAfter implements ObserverInterface
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
+        $product = $observer->getEvent()->getProduct();
+        $storeId = $product->getStoreId();
+
         $helper = $this->_objectManager->create('Anymarket\Anymarket\Helper\Data');
 
-        $enabled = $helper->getGeneralConfig('anyConfig/general/enable');
-        $canSyncProduct = $helper->getGeneralConfig('anyConfig/support/create_product_in_anymarket');
+        $enabled = $helper->getGeneralConfig('anyConfig/general/enable', $storeId);
+        $canSyncProduct = $helper->getGeneralConfig('anyConfig/support/create_product_in_anymarket', $storeId);
         if($enabled == "1" && $canSyncProduct == "1"){
-            $product = $observer->getEvent()->getProduct();
-
-            $attrIntegration = $helper->getGeneralConfig('anyConfig/support/attr_integration_anymarket');
+            $attrIntegration = $helper->getGeneralConfig('anyConfig/support/attr_integration_anymarket', $storeId);
             if($product->getData($attrIntegration) != "1"){
                 return $this;
             }
 
-            $oi = $helper->getGeneralConfig('anyConfig/general/oi');
-            $host = $helper->getGeneralConfig('anyConfig/general/host');
+            $oi = $helper->getGeneralConfig('anyConfig/general/oi', $storeId);
+            $host = $helper->getGeneralConfig('anyConfig/general/host', $storeId);
 
             $host = $host."/public/api/anymarketcallback/product/".$oi."/MAGENTO_2/".ScopeInterface::SCOPE_STORE."/".$product->getSku();
 
