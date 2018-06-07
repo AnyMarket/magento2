@@ -2,11 +2,16 @@
 
 namespace Anymarket\Anymarket\Model;
 
-use \Magento\Framework\App\Config\ScopeConfigInterface;
-use \Magento\Payment\Model\Config;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Payment\Model\Config;
 
 class PaymentMethod
 {
+    /**
+     * @var \Magento\Framework\App\ScopeResolverInterface
+     */
+    private $scopeResolver;
+
     /**
     * @param Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     * @param Magento\Payment\Model\Config $payConfig
@@ -20,14 +25,27 @@ class PaymentMethod
     }
 
     public function getPaymentMethods(){
-        $activePayments = $this->paymentConfig->getActiveMethods();
+        $storeId = $this->getScopeResolver()->getScope()->getId();
 
         $methods = array();
-        foreach($activePayments as $paymentCode => $paymentModel) {
-          $paymentTitle = $this->scopeConfig->getValue('payment/'.$paymentCode.'/title');
-          $methods[] = array('value'=>$paymentCode,'label'=>$paymentTitle);
+        foreach ($this->scopeConfig->getValue("payment", "store", $storeId) as $code => $data) {
+            if (isset($data['active'], $data['model']) && (bool)$data['active']) {
+                $paymentTitle = $this->scopeConfig->getValue('payment/'.$code.'/title');
+                $methods[] = array('value'=>$code,'label'=>$paymentTitle);
+            }
         }
-        return $methods;        
+        return $methods;
     }
+
+    private function getScopeResolver()
+    {
+        if ($this->scopeResolver == null) {
+            $this->scopeResolver = \Magento\Framework\App\ObjectManager::getInstance()
+                ->get(\Magento\Framework\App\ScopeResolverInterface::class);
+        }
+
+        return $this->scopeResolver;
+    }
+
 
 }
