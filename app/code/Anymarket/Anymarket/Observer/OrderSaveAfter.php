@@ -1,4 +1,5 @@
 <?php
+
 namespace Anymarket\Anymarket\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
@@ -21,6 +22,15 @@ class OrderSaveAfter implements ObserverInterface
         $this->_objectManager = $objectManager;
     }
 
+    private function saveFeed($id, $type, $oi)
+    {
+        $modelFeed = $this->_objectManager->create('Anymarket\Anymarket\Model\Anymarketfeed');
+        $modelFeed->setIdItem($id);
+        $modelFeed->setType($type);
+        $modelFeed->setOi($oi);
+        $modelFeed->save();
+    }
+
     /**
      * customer register event handler
      *
@@ -38,18 +48,19 @@ class OrderSaveAfter implements ObserverInterface
         if ($enabled == "1") {
             if ($order instanceof \Magento\Framework\Model\AbstractModel) {
                 $canCreateOrder = $helper->getGeneralConfig('anyConfig/support/create_order_in_anymarket', $storeId);
-                if($this->isNewOrder($order) && $canCreateOrder == "0"){
+                if ($this->isNewOrder($order) && $canCreateOrder == "0") {
                     return $this;
                 }
 
                 $orderId = $order->getId();
-
                 $oi = $helper->getGeneralConfig('anyConfig/general/oi', $storeId);
-                $host = $helper->getGeneralConfig('anyConfig/general/host', $storeId);
-
-                $host = $host . "/public/api/anymarketcallback/order/" . $oi . "/MAGENTO_2/" . ScopeInterface::SCOPE_STORE . "/" . $orderId;
-
-                $helper->doCallAnymarket($host);
+                if ($feed = $helper->getGeneralConfig('anyConfig/general/feedProduct', $storeId) == "1") {
+                    $this->saveFeed($orderId, "1", $oi);
+                } else {
+                    $host = $helper->getGeneralConfig('anyConfig/general/host', $storeId);
+                    $host = $host . "/public/api/anymarketcallback/order/" . $oi . "/MAGENTO_2/" . ScopeInterface::SCOPE_STORE . "/" . $orderId;
+                    $helper->doCallAnymarket($host);
+                }
             }
         }
         return $this;

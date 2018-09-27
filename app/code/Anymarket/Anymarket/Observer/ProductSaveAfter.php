@@ -1,4 +1,5 @@
 <?php
+
 namespace Anymarket\Anymarket\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
@@ -16,8 +17,18 @@ class ProductSaveAfter implements ObserverInterface
      */
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager
-    ) {
+    )
+    {
         $this->_objectManager = $objectManager;
+    }
+
+    private function saveFeed($id, $type, $oi)
+    {
+        $modelFeed = $this->_objectManager->create('Anymarket\Anymarket\Model\Anymarketfeed');
+        $modelFeed->setIdItem($id);
+        $modelFeed->setType($type);
+        $modelFeed->setOi($oi);
+        $modelFeed->save();
     }
 
     /**
@@ -35,18 +46,20 @@ class ProductSaveAfter implements ObserverInterface
 
         $enabled = $helper->getGeneralConfig('anyConfig/general/enable', $storeId);
         $canSyncProduct = $helper->getGeneralConfig('anyConfig/support/create_product_in_anymarket', $storeId);
-        if($enabled == "1" && $canSyncProduct == "1"){
+        if ($enabled == "1" && $canSyncProduct == "1") {
             $attrIntegration = $helper->getGeneralConfig('anyConfig/support/attr_integration_anymarket', $storeId);
-            if($product->getData($attrIntegration) != "1"){
+            if ($product->getData($attrIntegration) != "1") {
                 return $this;
             }
 
             $oi = $helper->getGeneralConfig('anyConfig/general/oi', $storeId);
-            $host = $helper->getGeneralConfig('anyConfig/general/host', $storeId);
-
-            $host = $host."/public/api/anymarketcallback/product/".$oi."/MAGENTO_2/".ScopeInterface::SCOPE_STORE."/".$product->getSku();
-
-            $helper->doCallAnymarket($host);
+            if ($feed = $helper->getGeneralConfig('anyConfig/general/feedProduct', $storeId) == "1") {
+                $this->saveFeed($product->getSku(), "2", $oi);
+            } else {
+                $host = $helper->getGeneralConfig('anyConfig/general/host', $storeId);
+                $host = $host . "/public/api/anymarketcallback/product/" . $oi . "/MAGENTO_2/" . ScopeInterface::SCOPE_STORE . "/" . $product->getSku();
+                $helper->doCallAnymarket($host);
+            }
         }
         return $this;
     }
