@@ -7,6 +7,8 @@
 	<preference for="Anymarket\Anymarket\Api\QuoteManagementInterface" type="Anymarket\Anymarket\Model\QuoteManagement"/>
 	<preference for="Anymarket\Anymarket\Api\ProductManagementInterface" type="Anymarket\Anymarket\Model\ProductManagement"/>
 	<preference for="Anymarket\Anymarket\Api\ConfigurationManagementInterface" type="Anymarket\Anymarket\Model\ConfigurationManagement"/>
+	<preference for="Anymarket\Anymarket\Api\OrderControlManagementInterface" type="Anymarket\Anymarket\Model\OrderControlManagement"/>
 	<preference for="Anymarket\Anymarket\Api\Data\AnymarketCartItemsInterface" type="Anymarket\Anymarket\Model\Data\AnymarketCartItems"/>
 	<preference for="Anymarket\Anymarket\Api\Data\AnymarketConfigurationInterface" type="Anymarket\Anymarket\Model\Data\AnymarketConfiguration"/>
+	<preference for="Anymarket\Anymarket\Api\Data\AnymarketOrderControlInterface" type="Anymarket\Anymarket\Model\Data\AnymarketOrderControl"/>
 </config>

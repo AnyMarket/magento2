@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Anymarket_Anymarket::parent" title="Anymarket" module="Anymarket_Anymarket" sortOrder="100"
+             resource="Anymarket_Anymarket::menu"/>
+        <add id="Anymarket_Anymarket::anymarketfeed" title="Anymarket Feed" module="Anymarket_Anymarket"
+             sortOrder="20" parent="Anymarket_Anymarket::parent" action="anymarket/anymarketfeed"
+             resource="Anymarket_Anymarket::anymarketfeed"/>
+        <add id="Anymarket_Anymarket::anymarketorder" title="Anymarket Order" module="Anymarket_Anymarket"
+             sortOrder="30" parent="Anymarket_Anymarket::parent" action="anymarket/anymarketorder"
+             resource="Anymarket_Anymarket::anymarketorder"/>
+    </menu>
+</config>
