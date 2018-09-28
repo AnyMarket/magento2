@@ -38,8 +38,7 @@ class OrderControlManagement
         $collectionOrder = $_objectManager->create('Anymarket\Anymarket\Model\Anymarketorder')->getCollection();
         $collectionOrder->addFieldToFilter('id_anymarket', $idAnymarket);
 
-        $methods = array();
-        return $methods[] = array("orders" => $collectionOrder->getData());
+        return $collectionOrder->getData();
     }
 
 
