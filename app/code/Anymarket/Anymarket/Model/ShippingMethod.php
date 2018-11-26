@@ -28,11 +28,20 @@ class ShippingMethod
 
         $activeCarriers = $this->shipconfig->getActiveCarriers($storeId);
         $methods = array();
-        foreach($activeCarriers as $carrierCode => $carrierModel) {
-          $carrierTitle = $this->scopeConfig->getValue('carriers/'.$carrierCode.'/title');
-          $methods[] = array('value'=>$carrierCode,'label'=>$carrierTitle);
+        foreach ($activeCarriers as $carrierCode => $carrierModel) {
+            $carrierTitle = $this->scopeConfig->getValue('carriers/' . $carrierCode . '/title');
+
+            $options = array();
+            if ($carrierMethods = $carrierModel->getAllowedMethods()) {
+                foreach ($carrierMethods as $methodCode => $method) {
+                    $code = $carrierCode . '_' . $methodCode;
+                    $options[] = array('value' => $code, 'label' => $method);
+                }
+            }
+
+            $methods[] = array('value' => $carrierCode, 'label' => $carrierTitle, 'options' => $options);
         }
-        return $methods;        
+        return $methods;
     }
 
     private function getScopeResolver()
