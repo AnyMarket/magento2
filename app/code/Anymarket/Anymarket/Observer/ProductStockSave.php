@@ -54,8 +54,8 @@ class ProductStockSave implements ObserverInterface
                 $this->saveFeed($product->getSku(), "0", $oi);
             } else {
                 $host = $helper->getGeneralConfig('anyConfig/general/host', $storeId);
-                $host = $host . "/public/api/anymarketcallback/stockPrice/" . $oi . "/" . $product->getSku();
-                $helper->doCallAnymarket($host);
+                $host = $host . "/public/api/anymarketcallback/stockPrice";
+                $helper->doCallAnymarket($host, $oi, "", $product->getSku());
             }
         }
         return $this;

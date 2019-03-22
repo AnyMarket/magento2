@@ -22,7 +22,14 @@ class Data extends AbstractHelper
         parent::__construct($context);
     }
 
-    public function doCallAnymarket($host){
+    public function doCallAnymarket($host, $oi, $storeCode, $itemId){
+        $body = array(
+            "oi" => $oi,
+            "version" => "MAGENTO_2",
+            "storeCode" => $storeCode,
+            "idItem" => $itemId
+        );
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -33,7 +40,7 @@ class Data extends AbstractHelper
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
-            CURLOPT_POSTFIELDS => "",
+            CURLOPT_POSTFIELDS => json_encode($body),
             CURLOPT_HTTPHEADER => array(
                 "cache-control: no-cache",
                 "content-type: application/json"

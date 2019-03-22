@@ -58,8 +58,8 @@ class OrderSaveAfter implements ObserverInterface
                     $this->saveFeed($orderId, "1", $oi);
                 } else {
                     $host = $helper->getGeneralConfig('anyConfig/general/host', $storeId);
-                    $host = $host . "/public/api/anymarketcallback/order/" . $oi . "/MAGENTO_2/" . ScopeInterface::SCOPE_STORE . "/" . $orderId;
-                    $helper->doCallAnymarket($host);
+                    $host = $host . "/public/api/anymarketcallback/order";
+                    $helper->doCallAnymarket($host, $oi, ScopeInterface::SCOPE_STORE, $orderId);
                 }
             }
         }

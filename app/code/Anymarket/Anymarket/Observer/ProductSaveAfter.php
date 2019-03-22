@@ -57,8 +57,8 @@ class ProductSaveAfter implements ObserverInterface
                 $this->saveFeed($product->getSku(), "2", $oi);
             } else {
                 $host = $helper->getGeneralConfig('anyConfig/general/host', $storeId);
-                $host = $host . "/public/api/anymarketcallback/product/" . $oi . "/MAGENTO_2/" . ScopeInterface::SCOPE_STORE . "/" . $product->getSku();
-                $helper->doCallAnymarket($host);
+                $host = $host . "/public/api/anymarketcallback/product";
+                $helper->doCallAnymarket($host, $oi, ScopeInterface::SCOPE_STORE, $product->getSku());
             }
         }
         return $this;
