@@ -4,7 +4,7 @@
 namespace Anymarket\Anymarket\Api;
 
 /**
- * Interface retrieving shipping methods
+ * Interface retrieving payment methods
  *
  * @api
  */
@@ -14,7 +14,7 @@ interface PaymentMethodInterface
     /**
      * Get payment methods
      *
-     * @return array
+     * @return mixed[]
      */
     public function getPaymentMethods();
 }

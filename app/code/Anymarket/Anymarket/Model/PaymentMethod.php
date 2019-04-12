@@ -24,6 +24,9 @@ class PaymentMethod
         $this->scopeConfig = $scopeConfig;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getPaymentMethods(){
         $storeId = $this->getScopeResolver()->getScope()->getId();
 

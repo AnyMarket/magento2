@@ -23,6 +23,9 @@ class ShippingMethod
         $this->scopeConfig = $scopeConfig;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getShippingMethods(){
         $activeCarriers = $this->shipconfig->getAllCarriers();
         $methods = array();

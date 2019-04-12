@@ -8,7 +8,7 @@ interface FeedManagementInterface
     /**
      * Get Order Control from Anymarket
      * @param int $typeFeed
-     * @return array
+     * @return mixed[]
      */
     public function getFeedByType($typeFeed);
 

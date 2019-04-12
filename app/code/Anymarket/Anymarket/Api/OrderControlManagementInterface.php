@@ -16,7 +16,7 @@ interface OrderControlManagementInterface
     /**
      * Get Order Control from Anymarket
      * @param int $idAnymarket
-     * @return array
+     * @return mixed[]
      */
     public function getOrderByIdAnymarket($idAnymarket);
 
