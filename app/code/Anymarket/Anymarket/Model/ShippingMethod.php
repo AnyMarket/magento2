@@ -24,7 +24,7 @@ class ShippingMethod
     }
 
     public function getShippingMethods(){
-        $activeCarriers = $this->shipconfig->getAllCarriers();
+        $activeCarriers = $this->shipconfig->getActiveCarriers();
         $methods = array();
         foreach ($activeCarriers as $carrierCode => $carrierModel) {
             $carrierTitle = $this->scopeConfig->getValue('carriers/' . $carrierCode . '/title');

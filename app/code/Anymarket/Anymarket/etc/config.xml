@@ -7,5 +7,16 @@
                 <host>http://api.anymarket.com.br</host>
             </general>
         </anymarket>
+        <carriers>
+            <anymarket_shipping>
+                <model>Anymarket\Anymarket\Model\Anymarketshipping</model>
+                <active>1</active>
+                <title>anymarket_shipping</title>
+                <name>anymarket_shipping</name>
+                <price>0.00</price>
+                <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
+                <sallowspecific>0</sallowspecific>
+            </anymarket_shipping>
+        </carriers>
     </default>
 </config>
