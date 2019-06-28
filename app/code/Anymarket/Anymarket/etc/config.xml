@@ -12,8 +12,7 @@
                 <model>Anymarket\Anymarket\Model\Anymarketshipping</model>
                 <active>1</active>
                 <title>anymarket_shipping</title>
-                <name>anymarket_shipping</name>
-                <price>0.00</price>
+                <name>Anymarket Shipping</name>
                 <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
                 <sallowspecific>0</sallowspecific>
             </anymarket_shipping>

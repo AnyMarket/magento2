@@ -41,16 +41,14 @@ class Anymarketshipping extends \Magento\Shipping\Model\Carrier\AbstractCarrier 
     public function collectRates(RateRequest $request)
     {
         $data = json_decode(file_get_contents('php://input'), true);
-
-        if(!isset($data['addressInformation'])
-           || !isset($data['addressInformation']['shippingAddress'])
-           || !isset($data['addressInformation']['shippingAddress']['prefix']) ) {
+        if(!isset($data['addressInformation']) || !isset($data['addressInformation']['custom_attributes'])) {
             return false;
         }
+        $customAttrs = $data['addressInformation']['custom_attributes'];
 
-        $subdistrict = $data['addressInformation']['shippingAddress']['prefix'];
-        $pos = strpos($subdistrict, 'ANYMARKET');
-        if ($pos === false) {
+        $shippingPrice = $this->getSpecificCustomAttr($customAttrs, 'anymarketFreight');
+        $shippingCarrier = $this->getSpecificCustomAttr($customAttrs, 'anymarketCarrier');
+        if ($shippingPrice == null || $shippingCarrier == null) {
             return $this;
         }
 
@@ -59,16 +57,26 @@ class Anymarketshipping extends \Magento\Shipping\Model\Carrier\AbstractCarrier 
 
         $method = $this->_rateMethodFactory->create();
         $method->setCarrier($this->_code);
-        $method->setCarrierTitle("ANYMARKET");
+        $method->setCarrierTitle("AnyMarket (".$shippingCarrier.")");
         $method->setMethod($methodCode);
         $method->setMethodTitle($methodCode);
 
-        $shippingPrice = '0.00';
         $method->setPrice($shippingPrice);
         $method->setCost($shippingPrice);
 
         $result->append($method);
         return $result;
+    }
+
+    private function getSpecificCustomAttr($customAttrs, $attrCode) {
+        $valueAttr = null;
+        foreach ($customAttrs as $attr) {
+            if($attr['attribute_code'] == $attrCode){
+                $valueAttr = $attr['value'];
+                break;
+            }
+        }
+        return $valueAttr;
     }
 
     /**
