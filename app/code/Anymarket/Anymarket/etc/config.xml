@@ -17,5 +17,15 @@
                 <sallowspecific>0</sallowspecific>
             </anymarket_shipping>
         </carriers>
+        <payment>
+            <anymarket_payment>
+                <active>1</active>
+                <model>Anymarket\Anymarket\Model\Anymarketpayment</model>
+                <order_status>pending</order_status>
+                <title>Anymarket Payment</title>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+            </anymarket_payment>
+        </payment>
     </default>
 </config>
