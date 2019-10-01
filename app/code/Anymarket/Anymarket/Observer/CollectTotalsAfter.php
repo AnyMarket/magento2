@@ -49,9 +49,15 @@ class CollectTotalsAfter implements ObserverInterface
         $shipAmount     = $quote->getShippingAddress()->getShippingAmount();
         $shipBaseAmount = $quote->getShippingAddress()->getBaseShippingAmount();
 
+        $taxAmount     = $quote->getShippingAddress()->getTaxAmount();
+        $baseTaxAmount = $quote->getShippingAddress()->getBaseTaxAmount();
+
+        $totals->setTaxAmount($taxAmount);
+        $totals->setBaseTaxAmount($baseTaxAmount);
+
         $totals->setShippingAmount($shipAmount);
         $totals->setBaseShippingAmount($shipBaseAmount);
         return $this;
-
     }
+
 }

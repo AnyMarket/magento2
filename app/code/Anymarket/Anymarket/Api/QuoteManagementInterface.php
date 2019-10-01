@@ -26,4 +26,16 @@ interface QuoteManagementInterface
         $idCart,
         $shipAmount
     );
+
+    /**
+     * PUT TAX amount
+     * @param int $idCart
+     * @param float $interestValue
+     * @return string
+     */
+    public function putInterestValue(
+        $idCart,
+        $interestValue
+    );
+
 }
