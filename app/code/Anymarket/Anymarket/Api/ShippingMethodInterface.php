@@ -14,7 +14,7 @@ interface ShippingMethodInterface
     /**
      * Get shipping methods
      *
-     * @return array
+     * @return mixed[]
      */
     public function getShippingMethods();
 }
