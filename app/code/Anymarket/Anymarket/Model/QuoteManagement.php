@@ -70,4 +70,22 @@ class QuoteManagement
         $quote->save();
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function putInterestValue($idCart, $interestValue)
+    {
+        $quote = $this->quoteRepository->getActive($idCart);
+
+        $quote->getShippingAddress()->setTaxAmount($interestValue);
+        $quote->getShippingAddress()->setBaseTaxAmount($interestValue);
+
+        $actBaseSubTotal = $quote->getShippingAddress()->getBaseSubtotal();
+        $newGrandTotal = $actBaseSubTotal + $interestValue;
+
+        $quote->setGrandTotal($newGrandTotal);
+        $quote->setBaseGrandTotal($newGrandTotal);
+        $quote->save();
+    }
+
 }
