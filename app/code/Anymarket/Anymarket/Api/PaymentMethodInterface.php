@@ -14,7 +14,7 @@ interface PaymentMethodInterface
     /**
      * Get payment methods
      *
-     * @return array
+     * @return mixed[]
      */
     public function getPaymentMethods();
 }
