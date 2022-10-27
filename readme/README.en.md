@@ -6,8 +6,12 @@ Current module version: **3.3.0**
 
 **Magento 2 - versions**
 ========================
-> - This module is compatible with **Magento 2**, and it was homologated by our team until version **2.3.5**;
->
+| Version |                            Status                            | Situation                                                                                                                                                                                                                                                                                           |
+|:-------:|:------------------------------------------------------------:|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|  2.3.5  |                           Approved                           | Approved in a local environment in the backoffice and sales channel flows;                                                                                                                                                                                                                          |
+|  2.4.4  | Under Approval<br/>(under analysis of<br/>scenario reported) | Some customers are already integrated using this version;<br/>- Backoffice Flow: no problems identified for customers operating in the version;<br/>- Sales Channel Flow: found a change in the price configuration, <br/ >what caused an error in the integration when the price has Global scope; |
+|  2.4.5  |                         Incompatible                         | The incompatibility of the current version of the module with this version of Magento 2 has been identified,<br/> and our engineering team is already working on the necessary adjustment to return to compatibility <br/>100% of the versions;                                                     |
+
 > **WARNING**
 > - Our support team (**suporte@anymarket.com.br**) must be contacted before performing any Magento version update, that way we'll be able to follow up your 
 update and to guarantee the proper integration operation; 

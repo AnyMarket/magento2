@@ -6,8 +6,12 @@ Versión actual del módulo: **3.3.0**
 
 **Versiones Magento 2**
 ========================
-> - Este módulo es compatible con **Magento 2** y fue aprovado por nuestro equipo hasta la versión **2.3.5**;
->
+| Versión |                             Status                              | Situación                                                                                                                                                                                                                                                                                                                     |
+|:-------:|:---------------------------------------------------------------:|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|  2.3.5  |                            Aprobado                             | Aprobado en un entorno local en los flujos de backoffice y canal de ventas;                                                                                                                                                                                                                                                   |
+|  2.4.4  | Bajo aprobación<br/>(bajo análisis del<br/>escenario informado) | Algunos clientes ya están integrados con esta versión;<br/>- Flujo Backoffice: no se identificaron problemas para los clientes que operan en la versión;<br/>- Flujo Canal de Ventas: se encontró un cambio en la configuración de precios, <br/ >qué causó un error en la integración cuando el precio tiene alcance Global; |
+|  2.4.5  |                          Incompatible                           | Se ha identificado la incompatibilidad de la versión actual del módulo con esta versión de Magento 2,<br/> y nuestro equipo de ingeniería ya está trabajando en el ajuste necesario para volver a la compatibilidad <br/>100% de las versiones;                                                                               |
+
 > **IMPORTANTE**
 > - Antes de hacer cualquier actualización de la versión del Magento, deve ser comunicado con al equipo de soporte (**suporte@anymarket.com.br**) para 
 acompañar y garantizar un flujo de operación de la integración;

@@ -6,8 +6,13 @@ Versão atual do módulo: **3.3.0**
 
 **Versões Magento 2**
 ========================
-> - Esse módulo é compatível com **Magento 2** e foi homologado por nossa equipe até a versão **2.3.5**;
->
+
+| Versão |                        Situação                         | Status                                                                                                                                                                                                                                                                                                                       |
+|:------:|:-------------------------------------------------------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 2.3.5  |                       Homologado                        | Homologado em ambiente local nos fluxos de backoffice e canal de venda;                                                                                                                                                                                                                                                      |
+| 2.4.4  | Em Homologação<br/>(em análise de<br/>cenário relatado) | Alguns clientes já estão integrados utilizando essa versão;<br/>- Fluxo Backoffice: sem identificação de problemas para os clientes operando na versão;<br/>- Fluxo Canal de Venda: encontrado uma alteração quanto a configuração de preço, <br/>o que acarretou em erro na integração quando o preço possui escopo Global; |
+| 2.4.5  |                      Incompatível                       | Foi identificado a incompatibilidade da versão atual do módulo com essa versão do Magento 2,<br/> e nosso time de engenharia já está trabalhando no ajuste necessário para voltarmos a <br/>compatibilidade em 100% das versões;                                                                                             |
+
 > **IMPORTANTE**
 > - Antes de realizar qualquer atualização de versão do Magento, deverá ser comunicado o time de suporte (**suporte@anymarket.com.br**) para que seja feito o
     acompanhamento e possamos garantir o devido funcionamento da integração;
@@ -34,7 +39,7 @@ Instalação
 
 Requisitos mínimos
 ------------------
-- [Magento] 2.x.x (até a `2.3.5`)
+- [Magento] 2.x.x (conforme descritivo das versões na tabela acima)
 - Servidor deve possuir a capacidade de processamento que não seja impactada entre outras integrações e site, nossa integração trabalha com as seguintes
   configurações:
     - Quantidade de requisições por segundo (default): 15 chamadas por segundo;
