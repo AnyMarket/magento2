@@ -6,7 +6,7 @@ Versión actual del módulo: **3.3.0**
 
 **Versiones Magento 2**
 ========================
-> - Este módulo es compatible con **Magento 2** y fue aprovado por nuestro equipo hasta la versión **2.4.4**;
+> - Este módulo es compatible con **Magento 2** y fue aprovado por nuestro equipo hasta la versión **2.3.5**;
 >
 > **IMPORTANTE**
 > - Antes de hacer cualquier actualización de la versión del Magento, deve ser comunicado con al equipo de soporte (**suporte@anymarket.com.br**) para 
@@ -34,7 +34,7 @@ Instalación
 
 Requerimientos mínimos
 ------------------
-- [Magento] 2.x.x (hasta la `2.4.4`)
+- [Magento] 2.x.x (hasta la `2.3.5`)
 - El servidor debe tener una capacidad de procesamiento que no se vea afectada entre otras integraciones y el sitio web, nuestra integración funciona con 
   las siguientes configuraciones:
     - Cuantidad de requisiciones por segundo (predeterminado): 15 llamadas por segundo;
