@@ -6,7 +6,7 @@ Current module version: **3.3.0**
 
 **Magento 2 - versions**
 ========================
-> - This module is compatible with **Magento 2**, and it was homologated by our team until version **2.4.4**;
+> - This module is compatible with **Magento 2**, and it was homologated by our team until version **2.3.5**;
 >
 > **WARNING**
 > - Our support team (**suporte@anymarket.com.br**) must be contacted before performing any Magento version update, that way we'll be able to follow up your 
@@ -34,7 +34,7 @@ Installation
 
 Minimum requirements
 ------------------
-- [Magento] 2.x.x (to `2.4.4`)
+- [Magento] 2.x.x (to `2.3.5`)
 - The server must have a processing capacity in a way that it won't be affected by the website and other integrations. Our integration works with the 
 following settings:
   - Amount of request per second (default): 15 requests per second;
