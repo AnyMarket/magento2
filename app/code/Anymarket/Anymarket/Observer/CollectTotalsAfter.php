@@ -33,7 +33,7 @@ class CollectTotalsAfter implements ObserverInterface
         $quote  = $observer->getData('quote');
 
         $shipPrefix = $quote->getShippingAddress()->getPrefix();
-        $pos = strpos($shipPrefix, 'ANYMARKET');
+        $pos = strpos((string) $shipPrefix, 'ANYMARKET');
         if ($pos === false) {
             return $this;
         }
