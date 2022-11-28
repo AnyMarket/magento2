@@ -19,7 +19,7 @@ interface QuoteManagementInterface
     /**
      * PUT shipping amount
      * @param int $idCart
-     * @param float $quote
+     * @param float $shipAmount
      * @return string
      */
     public function putShippingAmount(
