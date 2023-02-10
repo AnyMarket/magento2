@@ -13,4 +13,21 @@
 	<preference for="Anymarket\Anymarket\Api\Data\AnymarketCartItemsInterface" type="Anymarket\Anymarket\Model\Data\AnymarketCartItems"/>
 	<preference for="Anymarket\Anymarket\Api\Data\AnymarketConfigurationInterface" type="Anymarket\Anymarket\Model\Data\AnymarketConfiguration"/>
 	<preference for="Anymarket\Anymarket\Api\Data\AnymarketOrderControlInterface" type="Anymarket\Anymarket\Model\Data\AnymarketOrderControl"/>
+	<preference for="Anymarket\Anymarket\Api\OrderRepositoryInterface" type="Anymarket\Anymarket\Model\OrderRepository"/>
+	<type name="Anymarket\Anymarket\Model\OrderRepository">
+        <arguments>
+            <argument name="metadata" xsi:type="object">orderMetadata</argument>
+        </arguments>
+    </type>
+    <virtualType name="orderMetadata" type="Magento\Sales\Model\ResourceModel\Metadata">
+        <arguments>
+            <argument name="resourceClassName" xsi:type="string">Magento\Sales\Model\ResourceModel\Order</argument>
+            <argument name="modelClassName" xsi:type="string">Magento\Sales\Model\Order</argument>
+        </arguments>
+    </virtualType>
+
+	 <type name="Magento\InventoryApi\Api\SourceItemsSaveInterface">
+        <plugin name="callback_to_any_catalog_inventory_at_source_items_save"
+                type="Anymarket\Anymarket\Plugin\CallbackToAnyCatalogInventoryAtSourceItemsSavePlugin"/>
+    </type>
 </config>
