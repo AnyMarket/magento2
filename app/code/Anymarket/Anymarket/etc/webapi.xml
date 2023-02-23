@@ -72,4 +72,16 @@
 			<resource ref="self"/>
 		</resources>
 	</route>
+	<route url="/V1/anymarket/order" method="PUT">
+        <service class="Anymarket\Anymarket\Api\OrderRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Magento_Sales::create"/>
+        </resources>
+    </route>
+	<route url="/V1/anymarket/order" method="POST">
+        <service class="Anymarket\Anymarket\Api\OrderRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Magento_Sales::create"/>
+        </resources>
+    </route>
 </routes>
