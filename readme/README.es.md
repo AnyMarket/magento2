@@ -1,16 +1,16 @@
 Módulo de integración ANYMARKET y Magento 2.x.x
 ===========================================
 ---
-Versión actual del módulo: **3.3.0**
+Versión actual del módulo: **3.4.0**
 ---
 
 **Versiones Magento 2**
 ========================
-| Versión |                 Status                  | Situación                                                                                                                                                                                                                                                                                                                       |
-|:-------:|:---------------------------------------:|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|  2.3.5  |                Aprobado                 | Aprobado, flujos de backoffice y canal de ventas liberado 100% para integración;                                                                                                                                                                                                                                                |
-|  2.4.3  |  Aprobado <br/>(1 problema encontrado)  | Aprobado, flujo administrativo liberado para la integración, flujo del canal de ventas liberado con la siguiente advertencia:<br/> - Configuración del alcance del precio que debe realizar Store View;                                                                                                                         |
-|  2.4.5  | Aprobado <br/>(2 problemas encontrados) | Aprobado, flujo administrativo liberado para la integración, flujo del canal de ventas liberado con las siguientes advertencias:<br/> - Configuración del alcance del precio que debe realizar Store View;<br/> - Los pedidos se importan sin la información del documento del cliente, requiriendo acción manual en ANYMARKET; |
+| Versión |                Status                 | Situación                                                                                                                                                                                                  |
+|:-------:|:-------------------------------------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|  2.3.5  |               Aprobado                | Aprobado, flujos de backoffice y canal de ventas liberado 100% para integración;                                                                                                                           |
+|  2.4.3  | Aprobado <br/>(1 problema encontrado) | Aprobado, flujo administrativo liberado para la integración, flujo del canal de ventas liberado con la siguiente advertencia:<br/> - Configuración del alcance del precio que debe realizar Store View;    |
+|  2.4.5  | Aprobado <br/>(1 problema encontrado) | Aprobado, flujo administrativo liberado para la integración, flujo del canal de ventas liberado con las siguientes advertencias:<br/> - Configuración del alcance del precio que debe realizar Store View; |
 
 > **IMPORTANTE**
 > - Antes de hacer cualquier actualización de la versión del Magento, deve ser comunicado con al equipo de soporte (**suporte@anymarket.com.br**) para 
@@ -24,7 +24,7 @@ Descripción
 ¡Hola! Con el módulo de integración [ANYMARKET] cargado y configurado és posible que la integración automática de:
 - Productos
 - Ventas
-- Inventario
+- Inventario (multiples inventories)
 
 Instalación
 ----------
@@ -38,7 +38,7 @@ Instalación
 
 Requerimientos mínimos
 ------------------
-- [Magento] 2.x.x (hasta la `2.3.5`)
+- [Magento] 2.x.x (como se describe en las versiones de la tabla anterior)
 - El servidor debe tener una capacidad de procesamiento que no se vea afectada entre otras integraciones y el sitio web, nuestra integración funciona con 
   las siguientes configuraciones:
     - Cuantidad de requisiciones por segundo (predeterminado): 15 llamadas por segundo;

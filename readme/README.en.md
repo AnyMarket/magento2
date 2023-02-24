@@ -1,16 +1,16 @@
 ANYMARKET and Magento 2.x.x - Integration Module
 ===========================================
 ---
-Current module version: **3.3.0**
+Current module version: **3.4.0**
 ---
 
 **Magento 2 - versions**
 ========================
-| Version |              Status              | Situation                                                                                                                                                                                                                                                                                              |
-|:-------:|:--------------------------------:|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|  2.3.5  |             Approved             | Approved, backoffice flows and sales channel released 100% for integration;                                                                                                                                                                                                                            |
-|  2.4.3  | Approved <br/>(1 problem found)  | Approved, backoffice flow released for integration, sales channel flow released with the following caveat:<br/> - Price scope configuration that needs to be done by Store View;                                                                                                                       |
-|  2.4.5  | Approved <br/>(2 problems found) | Approved, backoffice flow released for integration, sales channel flow released with the following caveats:<br/> - Price scope configuration that needs to be done by Store View;<br/> - Orders are being imported without the information of customer document, requiring manual action in ANYMARKET; |
+| Version |             Status              | Situation                                                                                                                                                                         |
+|:-------:|:-------------------------------:|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|  2.3.5  |            Approved             | Approved, backoffice flows and sales channel released 100% for integration;                                                                                                       |
+|  2.4.3  | Approved <br/>(1 problem found) | Approved, backoffice flow released for integration, sales channel flow released with the following caveat:<br/> - Price scope configuration that needs to be done by Store View;  |
+|  2.4.5  | Approved <br/>(1 problem found) | Approved, backoffice flow released for integration, sales channel flow released with the following caveats:<br/> - Price scope configuration that needs to be done by Store View; |
 
 > **WARNING**
 > - Our support team (**suporte@anymarket.com.br**) must be contacted before performing any Magento version update, that way we'll be able to follow up your 
@@ -24,7 +24,7 @@ Description
 Hi! With ANYMARKET integration module properly installed and set up, the following automatic integrations will be possible:
 - Products
 - Orders
-- Stock
+- Stock (multiple stocks service)
 
 Installation
 ----------
@@ -38,7 +38,7 @@ Installation
 
 Minimum requirements
 ------------------
-- [Magento] 2.x.x (to `2.3.5`)
+- [Magento] 2.x.x (as described in the versions in the table above)
 - The server must have a processing capacity in a way that it won't be affected by the website and other integrations. Our integration works with the 
 following settings:
   - Amount of request per second (default): 15 requests per second;
