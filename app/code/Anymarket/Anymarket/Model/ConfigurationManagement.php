@@ -11,6 +11,8 @@ class ConfigurationManagement
 
     protected $_sconfigManager;
 
+    protected $scopeConfig;
+
 
     /**
     * @param Magento\Framework\App\Helper\Context $context
@@ -18,9 +20,14 @@ class ConfigurationManagement
     */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
-        \Magento\Framework\App\Config\Storage\WriterInterface $configManager
+        \Magento\Framework\App\Config\Storage\WriterInterface $configManager,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
         $this->_sconfigManager = $configManager;
+        $this->scopeConfig = $scopeConfig;
+        $scopeResolver = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\App\ScopeResolverInterface::class);
+        $storeId = $scopeResolver->getScope()->getId();
+        $this->msi = $this->scopeConfig->getValue("anyConfig/general/msi", "store", $storeId) ;
     }
 
     /**
