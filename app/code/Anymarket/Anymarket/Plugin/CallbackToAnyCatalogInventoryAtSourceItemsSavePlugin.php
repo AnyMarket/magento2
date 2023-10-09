@@ -47,7 +47,6 @@ class CallbackToAnyCatalogInventoryAtSourceItemsSavePlugin
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager
     ) {
-        $this->defaultSourceProvider = $defaultSourceProvider;
         $this->_objectManager = $objectManager;
 
         $this->defaultSourceProvider = class_exists(\Magento\InventoryCatalogApi\Api\DefaultSourceProviderInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryCatalogApi\Api\DefaultSourceProviderInterface::class):null;
