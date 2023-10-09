@@ -20,24 +20,24 @@ use Magento\Tax\Api\OrderTaxManagementInterface;
 use Magento\Payment\Api\Data\PaymentAdditionalInfoInterface;
 use Magento\Payment\Api\Data\PaymentAdditionalInfoInterfaceFactory;
 use Magento\Framework\Serialize\Serializer\Json as JsonSerializer;
-use Magento\InventoryReservationsApi\Model\ReservationBuilderInterface;
+// use Magento\InventoryReservationsApi\Model\ReservationBuilderInterface;
 use Magento\InventoryReservationsApi\Model\ReservationInterface;
 use Magento\Framework\Serialize\SerializerInterface;
-use Magento\InventoryCatalogApi\Model\GetSkusByProductIdsInterface;
+// use Magento\InventoryCatalogApi\Model\GetSkusByProductIdsInterface;
 use Magento\InventoryCatalogApi\Model\GetProductTypesBySkusInterface;
-use Magento\InventoryConfigurationApi\Model\IsSourceItemManagementAllowedForProductTypeInterface;
-use Magento\InventorySalesApi\Api\Data\ItemToSellInterfaceFactory;
+// use Magento\InventoryConfigurationApi\Model\IsSourceItemManagementAllowedForProductTypeInterface;
+// use Magento\InventorySalesApi\Api\Data\ItemToSellInterfaceFactory;
 use Magento\Store\Api\WebsiteRepositoryInterface;
-use Magento\InventorySalesApi\Model\StockByWebsiteIdResolverInterface;
-use Magento\InventorySales\Model\CheckItemsQuantity;
+// use Magento\InventorySalesApi\Model\StockByWebsiteIdResolverInterface;
+// use Magento\InventorySales\Model\CheckItemsQuantity;
 use Magento\InventorySalesApi\Api\Data\SalesEventInterface;
-use Magento\InventorySalesApi\Api\Data\SalesEventInterfaceFactory;
-use Magento\InventorySalesApi\Api\Data\SalesChannelInterface;
-use Magento\InventorySalesApi\Api\Data\SalesChannelInterfaceFactory;
-use Magento\InventorySalesApi\Api\PlaceReservationsForSalesEventInterface;
-use Magento\InventorySalesApi\Api\GetStockBySalesChannelInterface;
-use Magento\InventorySales\Model\SalesEventToArrayConverter;
-use Magento\InventoryReservationsApi\Model\AppendReservationsInterface;
+// use Magento\InventorySalesApi\Api\Data\SalesEventInterfaceFactory;
+// use Magento\InventorySalesApi\Api\Data\SalesChannelInterface;
+// use Magento\InventorySalesApi\Api\Data\SalesChannelInterfaceFactory;
+// use Magento\InventorySalesApi\Api\PlaceReservationsForSalesEventInterface;
+// use Magento\InventorySalesApi\Api\GetStockBySalesChannelInterface;
+// use Magento\InventorySales\Model\SalesEventToArrayConverter;
+// use Magento\InventoryReservationsApi\Model\AppendReservationsInterface;
 
 /**
  * Repository class
@@ -166,6 +166,10 @@ class OrderRepository implements \Anymarket\Anymarket\Api\OrderRepositoryInterfa
      */
     private $appendReservations;
 
+    protected $scopeConfig;
+
+    protected $msi;
+
     /**
      * Constructor
      *
@@ -181,45 +185,43 @@ class OrderRepository implements \Anymarket\Anymarket\Api\OrderRepositoryInterfa
     public function __construct(
         Metadata $metadata,
         SearchResultFactory $searchResultFactory,
-        ReservationBuilderInterface $reservationBuilder,
-        GetSkusByProductIdsInterface $getSkusByProductIds,
-        GetProductTypesBySkusInterface $getProductTypesBySkus,
-        ItemToSellInterfaceFactory $itemsToSellFactory,
+        // ReservationBuilderInterface $reservationBuilder,
+        // GetSkusByProductIdsInterface $getSkusByProductIds,
+        // GetProductTypesBySkusInterface $getProductTypesBySkus,
+        // ItemToSellInterfaceFactory $itemsToSellFactory,
         WebsiteRepositoryInterface $websiteRepository,
-        SalesEventInterfaceFactory $salesEventFactory,
-        StockByWebsiteIdResolverInterface $stockByWebsiteIdResolver,
-        CheckItemsQuantity $checkItemsQuantity,
-        SalesChannelInterfaceFactory $salesChannelFactory,
-        GetStockBySalesChannelInterface $getStockBySalesChannel,
-        PlaceReservationsForSalesEventInterface $placeReservationsForSalesEvent,
-        SalesEventToArrayConverter $salesEventToArrayConverter,
-        IsSourceItemManagementAllowedForProductTypeInterface $isSourceItemManagementAllowedForProductType,
+        // SalesEventInterfaceFactory $salesEventFactory,
+        // StockByWebsiteIdResolverInterface $stockByWebsiteIdResolver,
+        // CheckItemsQuantity $checkItemsQuantity,
+        // SalesChannelInterfaceFactory $salesChannelFactory,
+        // GetStockBySalesChannelInterface $getStockBySalesChannel,
+        // PlaceReservationsForSalesEventInterface $placeReservationsForSalesEvent,
+        // SalesEventToArrayConverter $salesEventToArrayConverter,
+        // IsSourceItemManagementAllowedForProductTypeInterface $isSourceItemManagementAllowedForProductType,
         CollectionProcessorInterface $collectionProcessor = null,
-        AppendReservationsInterface $appendReservations,
+        // AppendReservationsInterface $appendReservations,
         \Magento\Sales\Api\Data\OrderExtensionFactory $orderExtensionFactory = null,
         OrderTaxManagementInterface $orderTaxManagement = null,
         PaymentAdditionalInfoInterfaceFactory $paymentAdditionalInfoFactory = null,
         JsonSerializer $serializer = null,
         SerializerInterface $serializerInterface,
-        JoinProcessorInterface $extensionAttributesJoinProcessor = null
+        JoinProcessorInterface $extensionAttributesJoinProcessor = null,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
+        $this->scopeConfig = $scopeConfig;
         $this->metadata = $metadata;
         $this->searchResultFactory = $searchResultFactory;
-        $this->reservationBuilder = $reservationBuilder;
-        $this->getSkusByProductIds = $getSkusByProductIds;
-        $this->getProductTypesBySkus = $getProductTypesBySkus;
-        $this->itemsToSellFactory = $itemsToSellFactory;
         $this->websiteRepository = $websiteRepository;
-        $this->checkItemsQuantity = $checkItemsQuantity;
-        $this->salesEventFactory = $salesEventFactory;
-        $this->salesChannelFactory = $salesChannelFactory;
-        $this->stockByWebsiteIdResolver = $stockByWebsiteIdResolver;
-        $this->getStockBySalesChannel = $getStockBySalesChannel;
-        $this->placeReservationsForSalesEvent = $placeReservationsForSalesEvent;
-        $this->isSourceItemManagementAllowedForProductType = $isSourceItemManagementAllowedForProductType;
+        // $this->checkItemsQuantity = $checkItemsQuantity;
+        
+        // $this->salesChannelFactory = $salesChannelFactory;
+        // $this->stockByWebsiteIdResolver = $stockByWebsiteIdResolver;
+        // $this->getStockBySalesChannel = $getStockBySalesChannel;
+        // $this->placeReservationsForSalesEvent = $SalesEventToArrayConverter;
+        // $this->isSourceItemManagementAllowedForProductType = $isSourceItemManagementAllowedForProductType;
         $this->serializerInterface = $serializerInterface;
-        $this->appendReservations = $appendReservations;
-        $this->salesEventToArrayConverter = $salesEventToArrayConverter;
+        // $this->appendReservations = $appendReservations;
+        // $this->salesEventToArrayConverter = $salesEventToArrayConverter;
         $this->collectionProcessor = $collectionProcessor ?: ObjectManager::getInstance()
             ->get(\Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface::class);
         $this->orderExtensionFactory = $orderExtensionFactory ?: ObjectManager::getInstance()
@@ -232,6 +234,42 @@ class OrderRepository implements \Anymarket\Anymarket\Api\OrderRepositoryInterfa
             ->get(JsonSerializer::class);
         $this->extensionAttributesJoinProcessor = $extensionAttributesJoinProcessor
             ?: ObjectManager::getInstance()->get(JoinProcessorInterface::class);
+
+        $scopeResolver = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\App\ScopeResolverInterface::class);
+
+        $storeId = $scopeResolver->getScope()->getId();
+        $this->msi = $this->scopeConfig->getValue("anyConfig/general/msi", "store", $storeId) ;
+
+        if($this->msi){
+            $this->reservationBuilder = class_exists(\Magento\InventoryReservationsApi\Model\ReservationBuilderInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryReservationsApi\Model\ReservationBuilderInterface::class):null;
+            $this->getSkusByProductIds = class_exists(\Magento\InventoryCatalogApi\Model\GetSkusByProductIdsInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryCatalogApi\Model\GetSkusByProductIdsInterface::class):null;
+            $this->getProductTypesBySkus = class_exists(\Magento\InventoryCatalogApi\Model\GetProductTypesBySkusInterface::class)? ObjectManager::getInstance()->get(\Magento\InventoryCatalogApi\Model\GetProductTypesBySkusInterface::class):null;
+            $this->itemsToSellFactory =  class_exists(\Magento\InventorySalesApi\Api\Data\ItemToSellInterfaceFactory::class)?ObjectManager::getInstance()->get(\Magento\InventorySalesApi\Api\Data\ItemToSellInterfaceFactory::class):null;
+            $this->salesEventFactory =  class_exists(\Magento\InventorySalesApi\Api\Data\SalesEventInterfaceFactory::class)?ObjectManager::getInstance()->get(\Magento\InventorySalesApi\Api\Data\SalesEventInterfaceFactory::class):null;
+            $this->stockByWebsiteIdResolver =  class_exists(\Magento\InventorySalesApi\Model\StockByWebsiteIdResolverInterface::class)?ObjectManager::getInstance()->get(\Magento\InventorySalesApi\Model\StockByWebsiteIdResolverInterface::class):null;
+            $this->checkItemsQuantity =  class_exists(\Magento\InventorySales\Model\CheckItemsQuantity::class)?ObjectManager::getInstance()->get(\Magento\InventorySales\Model\CheckItemsQuantity::class):null;
+            $this->salesChannelFactory =  class_exists(\Magento\InventorySalesApi\Api\Data\SalesChannelInterfaceFactory::class)?ObjectManager::getInstance()->get(\Magento\InventorySalesApi\Api\Data\SalesChannelInterfaceFactory::class):null;
+            $this->getStockBySalesChannel =  class_exists(\Magento\InventorySalesApi\Api\GetStockBySalesChannelInterface::class)?ObjectManager::getInstance()->get(\Magento\InventorySalesApi\Api\GetStockBySalesChannelInterface::class):null;
+            $this->placeReservationsForSalesEvent =  class_exists(\Magento\InventorySalesApi\Api\PlaceReservationsForSalesEventInterface::class)?ObjectManager::getInstance()->get(\Magento\InventorySalesApi\Api\PlaceReservationsForSalesEventInterface::class):null;
+            $this->salesEventToArrayConverter =  class_exists(\Magento\InventorySales\Model\SalesEventToArrayConverter::class)?ObjectManager::getInstance()->get(\Magento\InventorySales\Model\SalesEventToArrayConverter::class):null;
+            $this->isSourceItemManagementAllowedForProductType =  class_exists(\Magento\InventoryConfigurationApi\Model\IsSourceItemManagementAllowedForProductTypeInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryConfigurationApi\Model\IsSourceItemManagementAllowedForProductTypeInterface::class):null;
+            $this->appendReservations =  class_exists(\Magento\InventoryReservationsApi\Model\AppendReservationsInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryReservationsApi\Model\AppendReservationsInterface::class):null;
+            
+        }else{
+            $this->reservationBuilder = null;
+            $this->getSkusByProductIds = null;
+            $this->getProductTypesBySkus = null;
+            $this->itemsToSellFactory = null;
+            $this->salesEventFactory =  null;
+            $this->stockByWebsiteIdResolver =  null;
+            $this->checkItemsQuantity =  null;
+            $this->salesChannelFactory =  null;
+            $this->getStockBySalesChannel =  null;
+            $this->placeReservationsForSalesEvent = null;
+            $this->salesEventToArrayConverter =  null;
+            $this->isSourceItemManagementAllowedForProductType =  null;
+            $this->appendReservations =  null;
+        }
     }
 
    
@@ -360,41 +398,56 @@ class OrderRepository implements \Anymarket\Anymarket\Api\OrderRepositoryInterfa
             }
             $itemsById[$item->getProductId()] += $item->getQtyOrdered();
         }
-        $productSkus = $this->getSkusByProductIds->execute(array_keys($itemsById));
-        $productTypes = $this->getProductTypesBySkus->execute($productSkus);
+        if($this->getSkusByProductIds){
+            $productSkus = $this->getSkusByProductIds->execute(array_keys($itemsById));
+        }
+        if($this->getProductTypesBySkus){
+            $productTypes = $this->getProductTypesBySkus->execute($productSkus);
+        }
 
-        foreach ($productSkus as $productId => $sku) {
-            if (false === $this->isSourceItemManagementAllowedForProductType->execute($productTypes[$sku])) {
-                continue;
+        if($this->isSourceItemManagementAllowedForProductType){
+            foreach ($productSkus as $productId => $sku) {
+                if (false === $this->isSourceItemManagementAllowedForProductType->execute($productTypes[$sku])) {
+                    continue;
+                }
+
+                $itemsBySku[$sku] = (float)$itemsById[$productId];
+                $itemsToSell[] = $this->itemsToSellFactory->create([
+                    'sku' => $sku,
+                    'qty' => -(float)$itemsById[$productId]
+                ]);
             }
-
-            $itemsBySku[$sku] = (float)$itemsById[$productId];
-            $itemsToSell[] = $this->itemsToSellFactory->create([
-                'sku' => $sku,
-                'qty' => -(float)$itemsById[$productId]
-            ]);
         }
 
         $websiteId = (int)$order->getStore()->getWebsiteId();
         $websiteCode = $this->websiteRepository->getById($websiteId)->getCode();
-        $stockId = (int)$this->stockByWebsiteIdResolver->execute((int)$websiteId)->getStockId();
+        if($this->stockByWebsiteIdResolver){
+            $stockId = (int)$this->stockByWebsiteIdResolver->execute((int)$websiteId)->getStockId();
+        }
 
-        $this->checkItemsQuantity->execute($itemsBySku, $stockId);
+        if($this->checkItemsQuantity){
+            $this->checkItemsQuantity->execute($itemsBySku, $stockId);
+        }
 
-        /** @var SalesEventInterface $salesEvent */
-        $salesEvent = $this->salesEventFactory->create([
-            'type' => SalesEventInterface::EVENT_ORDER_PLACED,
-            'objectType' => SalesEventInterface::OBJECT_TYPE_ORDER,
-            'objectId' => (string)$order->getEntityId()
-        ]);
-        $salesChannel = $this->salesChannelFactory->create([
-            'data' => [
-                'type' => SalesChannelInterface::TYPE_WEBSITE,
-                'code' => $websiteCode
-            ]
-        ]);
+        if($this->salesEventFactory){
 
-        $this->placeReservationsForSalesEvent($itemsToSell, $salesChannel, $salesEvent, $stockIds);
+            /** @var SalesEventInterface $salesEvent */
+            $salesEvent = $this->salesEventFactory->create([
+                'type' => \Magento\InventorySalesApi\Api\Data\SalesEventInterface::EVENT_ORDER_PLACED,
+                'objectType' => \Magento\InventorySalesApi\Api\Data\SalesEventInterface::OBJECT_TYPE_ORDER,
+                'objectId' => (string)$order->getEntityId()
+            ]);
+            $salesChannel = $this->salesChannelFactory->create([
+                'data' => [
+                    'type' => \Magento\InventorySalesApi\Api\Data\SalesChannelInterface::TYPE_WEBSITE,
+                    'code' => $websiteCode
+                ]
+            ]);
+        }
+
+        if(isset($salesChannel) && $salesChannel instanceof \Magento\InventorySalesApi\Api\Data\SalesChannelInterface){
+            $this->placeReservationsForSalesEvent($itemsToSell, $salesChannel, $salesEvent, $stockIds);
+        }
         return $order;
     }
 
@@ -408,14 +461,19 @@ class OrderRepository implements \Anymarket\Anymarket\Api\OrderRepositoryInterfa
             return;
         }
 
-        $stockId = $this->getStockBySalesChannel->execute($salesChannel)->getStockId();
+        if($this->getStockBySalesChannel){
+            $stockId = $this->getStockBySalesChannel->execute($salesChannel)->getStockId();
+        }
 
         $skus = [];
         /** @var ItemToSellInterface $item */
         foreach ($items as $item) {
             $skus[] = $item->getSku();
         }
-        $productTypes = $this->getProductTypesBySkus->execute($skus);
+
+        if($this->getProductTypesBySkus){
+            $productTypes = $this->getProductTypesBySkus->execute($skus);
+        }
 
         $reservations = [];
         /** @var ItemToSellInterface $item */
@@ -425,17 +483,22 @@ class OrderRepository implements \Anymarket\Anymarket\Api\OrderRepositoryInterfa
             if($stockIds[$currentSku]){
                 $stockId = $stockIds[$currentSku];
             }
-            if ($skuNotExistInCatalog ||
-                $this->isSourceItemManagementAllowedForProductType->execute($productTypes[$currentSku])) {
-                $reservations[] = $this->reservationBuilder
-                    ->setSku($item->getSku())
-                    ->setQuantity((float)$item->getQuantity())
-                    ->setStockId($stockId)
-                    ->setMetadata($this->serializerInterface->serialize($this->salesEventToArrayConverter->execute($salesEvent)))
-                    ->build();
+            if($this->isSourceItemManagementAllowedForProductType){
+
+                if ($skuNotExistInCatalog ||
+                    $this->isSourceItemManagementAllowedForProductType->execute($productTypes[$currentSku])) {
+                    $reservations[] = $this->reservationBuilder
+                        ->setSku($item->getSku())
+                        ->setQuantity((float)$item->getQuantity())
+                        ->setStockId($stockId)
+                        ->setMetadata($this->serializerInterface->serialize($this->salesEventToArrayConverter->execute($salesEvent)))
+                        ->build();
+                }
             }
         }
-        $this->appendReservations->execute($reservations);
+        if($this->appendReservations){
+            $this->appendReservations->execute($reservations);
+        }
     }
     /**
      * Set shipping assignments to extension attributes.

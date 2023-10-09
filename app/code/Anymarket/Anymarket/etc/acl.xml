@@ -6,8 +6,6 @@
                     <resource id="Anymarket_Anymarket::anymarketfeed" title="Feeds" sortOrder="0" />
                     <resource id="Anymarket_Anymarket::anymarketorder" title="Orders" sortOrder="100" />
                 </resource>
-            </resource>
-            <resource id="Magento_Backend::admin">
                 <resource id="Magento_Sales::sales" title="Sales" translate="title" sortOrder="20">
                     <resource id="Magento_Sales::sales_operation" title="Operations" translate="title" sortOrder="10">
                         <resource id="Magento_Sales::sales_order"  title="Orders" translate="title" sortOrder="10">

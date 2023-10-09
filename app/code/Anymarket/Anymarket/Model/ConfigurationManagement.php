@@ -4,6 +4,14 @@ namespace Anymarket\Anymarket\Model;
 
 class ConfigurationManagement
 {
+
+    const VERSION = "3.3.0";
+
+    protected $msi = true;
+
+    protected $_sconfigManager;
+
+
     /**
     * @param Magento\Framework\App\Helper\Context $context
     * @param Magento\Store\Model\StoreManagerInterface $storeManager
@@ -28,6 +36,16 @@ class ConfigurationManagement
         $this->_sconfigManager->save('anyConfig/support/create_product_in_anymarket', $sendProduct);
         $this->_sconfigManager->save('anyConfig/support/attr_integration_anymarket', $attrIntegAny);
         return "";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfiguration()
+    {
+        $data = (array("version"=> self::VERSION, "msi"=> $this->msi));
+        
+        return $data;
     }
 
 }

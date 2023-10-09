@@ -13,4 +13,9 @@ interface ConfigurationManagementInterface
        \Anymarket\Anymarket\Api\Data\AnymarketConfigurationInterface $configuration
     );
 
+    /**
+     * Get Configuration from Anymarket
+     * @return string
+     */
+    public function getConfiguration();
 }

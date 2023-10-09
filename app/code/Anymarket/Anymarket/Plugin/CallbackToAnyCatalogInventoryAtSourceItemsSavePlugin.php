@@ -10,9 +10,7 @@ namespace Anymarket\Anymarket\Plugin;
 use Magento\InventoryApi\Api\Data\SourceItemInterface;
 use Magento\InventoryApi\Api\SourceItemsSaveInterface;
 use Magento\InventoryCatalog\Model\SourceItemsSaveSynchronization\SetDataToLegacyCatalogInventory;
-use Magento\InventoryCatalogApi\Api\DefaultSourceProviderInterface;
-use Magento\InventoryCatalogApi\Model\GetProductTypesBySkusInterface;
-use Magento\InventoryConfigurationApi\Model\IsSourceItemManagementAllowedForProductTypeInterface;
+use Magento\Framework\App\ObjectManager;
 
 /**
  * Synchronization between legacy Stock Items and saved Source Items
@@ -45,23 +43,18 @@ class CallbackToAnyCatalogInventoryAtSourceItemsSavePlugin
     protected $_objectManager;
 
     /**
-     * @param DefaultSourceProviderInterface $defaultSourceProvider
-     * @param IsSourceItemManagementAllowedForProductTypeInterface $isSourceItemsAllowedForProductType
-     * @param GetProductTypesBySkusInterface $getProductTypeBySku
-     * @param SetDataToLegacyCatalogInventory $setDataToLegacyCatalogInventory
      */
     public function __construct(
-        DefaultSourceProviderInterface $defaultSourceProvider,
-        IsSourceItemManagementAllowedForProductTypeInterface $isSourceItemsAllowedForProductType,
-        GetProductTypesBySkusInterface $getProductTypeBySku,
-        SetDataToLegacyCatalogInventory $setDataToLegacyCatalogInventory,
         \Magento\Framework\ObjectManagerInterface $objectManager
     ) {
         $this->defaultSourceProvider = $defaultSourceProvider;
-        $this->isSourceItemsAllowedForProductType = $isSourceItemsAllowedForProductType;
-        $this->getProductTypeBySku = $getProductTypeBySku;
-        $this->setDataToLegacyCatalogInventory = $setDataToLegacyCatalogInventory;
         $this->_objectManager = $objectManager;
+
+        $this->defaultSourceProvider = class_exists(\Magento\InventoryCatalogApi\Api\DefaultSourceProviderInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryCatalogApi\Api\DefaultSourceProviderInterface::class):null;
+        $this->isSourceItemsAllowedForProductType = class_exists(\Magento\InventoryConfigurationApi\Model\IsSourceItemManagementAllowedForProductTypeInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryConfigurationApi\Model\IsSourceItemManagementAllowedForProductTypeInterface::class):null;
+        $this->getProductTypeBySku = class_exists(\Magento\InventoryCatalogApi\Model\GetProductTypesBySkusInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryCatalogApi\Model\GetProductTypesBySkusInterface::class):null;
+        $this->setDataToLegacyCatalogInventory = class_exists(\Magento\InventoryCatalog\Model\SourceItemsSaveSynchronization\SetDataToLegacyCatalogInventory::class)?ObjectManager::getInstance()->get(\Magento\InventoryCatalog\Model\SourceItemsSaveSynchronization\SetDataToLegacyCatalogInventory::class):null;
+        
     }
 
     /**

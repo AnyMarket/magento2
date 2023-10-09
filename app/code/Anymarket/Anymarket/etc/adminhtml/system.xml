@@ -37,6 +37,10 @@
                     <label>HOST</label>
                     <comment>Endereço para integração.</comment>
                 </field>
+                 <field id="msi" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>MSI Active</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
             </group>
             <group id="support" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Suporte</label>
