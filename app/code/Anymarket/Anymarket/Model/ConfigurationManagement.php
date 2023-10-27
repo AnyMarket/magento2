@@ -27,7 +27,7 @@ class ConfigurationManagement
         $this->scopeConfig = $scopeConfig;
         $scopeResolver = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\App\ScopeResolverInterface::class);
         $storeId = $scopeResolver->getScope()->getId();
-        $this->msi = $this->scopeConfig->getValue("anyConfig/general/msi", "store", $storeId) ;
+        $this->msi = $this->scopeConfig->getValue("anyConfig/general/msi", "store", $storeId)==1?true:false ;
     }
 
     /**

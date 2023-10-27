@@ -21,18 +21,21 @@ class UpgradeData implements UpgradeDataInterface
 	public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
 	{
 		if (version_compare($context->getVersion(), '1.1.0', '<')) {
-
-            if(!class_exists(\Magento\InventorySalesApi\Api\Data\ItemToSellInterfaceFactory::class)
-            || !class_exists(\Magento\InventorySalesApi\Api\Data\SalesEventInterfaceFactory::class)
-            || !class_exists(\Magento\InventorySales\Model\CheckItemsQuantity::class)
-            || !class_exists(\Magento\InventorySalesApi\Api\Data\SalesChannelInterfaceFactory::class)
-            || !class_exists(\Magento\InventorySales\Model\SalesEventToArrayConverter::class)
-            ){
-                $this->configWriter->save("anyConfig/general/msi", 0, $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0);
-            }else{
-                $this->configWriter->save("anyConfig/general/msi", 1, $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0);
-
-            }
+            $this->configWriter->save("anyConfig/general/msi", $this->checkMsiActive(), $scope = ScopeConfigInterface::SCOPE_TYPE_DEFAULT, $scopeId = 0);
 		}
 	}
+
+    public function checkMsiActive(){
+
+        if(!class_exists(\Magento\InventorySalesApi\Api\Data\ItemToSellInterfaceFactory::class)
+        || !class_exists(\Magento\InventorySalesApi\Api\Data\SalesEventInterfaceFactory::class)
+        || !class_exists(\Magento\InventorySales\Model\CheckItemsQuantity::class)
+        || !class_exists(\Magento\InventorySalesApi\Api\Data\SalesChannelInterfaceFactory::class)
+        || !class_exists(\Magento\InventorySales\Model\SalesEventToArrayConverter::class)
+        ){
+            return 0;
+        }else{
+            return 1;
+        }
+    }
 }
