@@ -54,8 +54,6 @@ class OrderItemRepository {
     public function __construct(
         \Magento\Sales\Api\Data\OrderItemExtensionInterfaceFactory $extensionFactory, 
         \Magento\Framework\ObjectManagerInterface $objectManager,
-        \Magento\InventoryApi\Api\SourceRepositoryInterface $sourceRepository,
-        \Magento\Inventory\Model\Source\Command\GetSourcesAssignedToStockOrderedByPriority $getSourcesAssignedToStockOrderedByPriority,
         \Magento\CatalogInventory\Model\Stock\StockItemRepository $stockItemRepository,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     )
@@ -63,12 +61,12 @@ class OrderItemRepository {
         $this->scopeConfig = $scopeConfig;
         $this->extensionFactory = $extensionFactory;
         $this->_objectManager = $objectManager;
-        $this->sourceRepository = $sourceRepository;
-        $this->getSourcesAssignedToStockOrderedByPriority = $getSourcesAssignedToStockOrderedByPriority;
         $this->_stockItemRepository = $stockItemRepository;
 
         $this->searchCriteriaBuilder = class_exists(\Magento\Framework\Api\SearchCriteriaBuilder::class)?ObjectManager::getInstance()->get(\Magento\Framework\Api\SearchCriteriaBuilder::class):null;
         $this->sourceItemRepository = class_exists(\Magento\Inventory\Model\SourceItemRepository::class)?ObjectManager::getInstance()->get(\Magento\Inventory\Model\SourceItemRepository::class):null;
+        $this->sourceRepository = class_exists(\Magento\InventoryApi\Api\SourceRepositoryInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryApi\Api\SourceRepositoryInterface::class):null;
+        $this->getSourcesAssignedToStockOrderedByPriority = class_exists(\Magento\Inventory\Model\Source\Command\GetSourcesAssignedToStockOrderedByPriority::class)?ObjectManager::getInstance()->get(\Magento\Inventory\Model\Source\Command\GetSourcesAssignedToStockOrderedByPriority::class):null;
 
         $scopeResolver = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\App\ScopeResolverInterface::class);
         $storeId = $scopeResolver->getScope()->getId();

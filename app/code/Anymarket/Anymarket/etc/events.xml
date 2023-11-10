@@ -12,6 +12,9 @@
 	<event name="sales_quote_address_collect_totals_after">
 		<observer instance="Anymarket\Anymarket\Observer\CollectTotalsAfter" name="Anymarket_Anymarket_Collect_Totals_After"/>
 	</event>
+	 <event name="checkout_submit_all_after">
+        <observer name="Anymarket_Anymarket_inventory" instance="Anymarket\Anymarket\Observer\CheckoutAllSubmitAfterObserver"/>
+    </event>
 	<!-- <event name="catalog_product_save_after">
         <observer name="callback_any_product" instance="Anymarket\Anymarket\Observer\ProductStockSave"/>
     </event> -->
