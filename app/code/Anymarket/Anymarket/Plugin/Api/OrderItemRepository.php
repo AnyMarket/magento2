@@ -65,7 +65,7 @@ class OrderItemRepository {
 
         $this->searchCriteriaBuilder = class_exists(\Magento\Framework\Api\SearchCriteriaBuilder::class)?ObjectManager::getInstance()->get(\Magento\Framework\Api\SearchCriteriaBuilder::class):null;
         $this->sourceItemRepository = class_exists(\Magento\Inventory\Model\SourceItemRepository::class)?ObjectManager::getInstance()->get(\Magento\Inventory\Model\SourceItemRepository::class):null;
-        $this->sourceRepository = class_exists(\Magento\InventoryApi\Api\SourceRepositoryInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryApi\Api\SourceRepositoryInterface::class):null;
+        $this->sourceRepository = interface_exists(\Magento\InventoryApi\Api\SourceRepositoryInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryApi\Api\SourceRepositoryInterface::class):null;
         $this->getSourcesAssignedToStockOrderedByPriority = class_exists(\Magento\Inventory\Model\Source\Command\GetSourcesAssignedToStockOrderedByPriority::class)?ObjectManager::getInstance()->get(\Magento\Inventory\Model\Source\Command\GetSourcesAssignedToStockOrderedByPriority::class):null;
 
         $scopeResolver = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Framework\App\ScopeResolverInterface::class);
