@@ -107,7 +107,7 @@ class OrderItemRepository {
     {
         if($this->msi){
             $items = $searchResult->getItems();
-
+            
             foreach ($items as &$item) {
                 $store_id = $item->getData("store_id");
                 $stock = $this->_stockItemRepository->get($item->getData("product_id"));
@@ -133,12 +133,17 @@ class OrderItemRepository {
                         }
                     }
                 }
-                
-                $options = $item->getProductOption()->getExtensionAttributes()->getCustomOptions();
-                foreach($options as $op){
-                    $optionValue = $op->getOptionValue();
-                    $optionId = $op->getOptionId();
+
+                $option =  $item->getProductOption();
+                $optionId = null;
+                if( $option ){
+                    $options = $option->getExtensionAttributes()->getCustomOptions();
+                    foreach($options as $op){
+                        $optionValue = $op->getOptionValue();
+                        $optionId = $op->getOptionId();
+                    }
                 }
+
                 if($optionId){
                     $source = $optionId;
                 }else if(!$source){
