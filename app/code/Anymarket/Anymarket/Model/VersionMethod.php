@@ -4,6 +4,7 @@ namespace Anymarket\Anymarket\Model;
 
 class VersionMethod
 {
+    protected $version;
 
     public function __construct(
     ) {
