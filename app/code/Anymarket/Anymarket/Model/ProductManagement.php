@@ -4,6 +4,12 @@ namespace Anymarket\Anymarket\Model;
 
 class ProductManagement
 {
+
+    /**
+     * @var \Magento\ConfigurableProduct\Model\Product\Type\Configurable
+     */
+    protected $_configprodManager;
+
     /**
      * @param Magento\Framework\App\Helper\Context $context
      * @param Magento\ConfigurableProduct\Model\Product\Type\Configurable $storeManager

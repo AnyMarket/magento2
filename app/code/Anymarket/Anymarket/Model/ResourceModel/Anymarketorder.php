@@ -13,4 +13,3 @@ class Anymarketorder extends \Magento\Framework\Model\ResourceModel\Db\AbstractD
         $this->_init('anymarket_order', 'entity_id');
     }
 }
-?>
