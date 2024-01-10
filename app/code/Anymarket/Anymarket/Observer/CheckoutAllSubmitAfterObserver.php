@@ -29,6 +29,11 @@ class CheckoutAllSubmitAfterObserver implements ObserverInterface
     protected $helper;
 
     /**
+     * @var StoreManagerInterface
+     */
+    protected $storeManager;
+
+    /**
      * @param ProductFactory $productFactory
      * @param Anymarketfeed $feed
      * @param Data $helper
@@ -36,11 +41,13 @@ class CheckoutAllSubmitAfterObserver implements ObserverInterface
     public function __construct(
         \Magento\Catalog\Model\ProductFactory $productFactory,
         \Anymarket\Anymarket\Model\Anymarketfeed $feed,
-        \Anymarket\Anymarket\Helper\Data $helper
+        \Anymarket\Anymarket\Helper\Data $helper,
+        \Magento\Store\Model\StoreManagerInterface $storeManager
     ) {
         $this->productFactory = $productFactory;
         $this->feed = $feed;
         $this->helper = $helper;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -60,19 +67,21 @@ class CheckoutAllSubmitAfterObserver implements ObserverInterface
                 $storeId = 1;
             }
             
-            $enabled = $this->helper->getGeneralConfig('anyConfig/general/enable', $storeId);
-            $canSyncOrder = $this->helper->getGeneralConfig('anyConfig/support/create_order_in_anymarket', $storeId);
-            if ($enabled == "1" && $canSyncOrder == "0") {
-                $productId = $this->productFactory->create()->getIdBySku($item->getSku());
-                $product = $this->productFactory->create()->load($productId);
+            foreach ($this->storeManager->getStores() as $storeId => $storeData) {
+                $enabled = $this->helper->getGeneralConfig('anyConfig/general/enable', $storeId);
+                $canSyncOrder = $this->helper->getGeneralConfig('anyConfig/support/create_order_in_anymarket', $storeId);
+                if ($enabled == "1" && $canSyncOrder == "0") {
+                    $productId = $this->productFactory->create()->getIdBySku($item->getSku());
+                    $product = $this->productFactory->create()->load($productId);
 
-                $oi = $this->helper->getGeneralConfig('anyConfig/general/oi', $storeId);
-                if ($feed = $this->helper->getGeneralConfig('anyConfig/general/feedStock', $storeId) == "1") {
-                    $this->saveFeed($product->getSku(), "0", $oi);
-                } else {
-                    $host = $this->helper->getGeneralConfig('anyConfig/general/host', $storeId);
-                    $host = $host . "/public/api/anymarketcallback/stockPrice";
-                    $this->helper->doCallAnymarket($host, $oi, "", $product->getSku());
+                    $oi = $this->helper->getGeneralConfig('anyConfig/general/oi', $storeId);
+                    if ($feed = $this->helper->getGeneralConfig('anyConfig/general/feedStock', $storeId) == "1") {
+                        $this->saveFeed($product->getSku(), "0", $oi);
+                    } else {
+                        $host = $this->helper->getGeneralConfig('anyConfig/general/host', $storeId);
+                        $host = $host . "/public/api/anymarketcallback/stockPrice";
+                        $this->helper->doCallAnymarket($host, $oi, "", $product->getSku());
+                    }
                 }
             }
         }
@@ -81,10 +90,25 @@ class CheckoutAllSubmitAfterObserver implements ObserverInterface
 
     private function saveFeed($id, $type, $oi)
     {
-        $this->feed->setIdItem($id);
-        $this->feed->setType($type);
-        $this->feed->setOi($oi);
-        $this->feed->save();
+        $collection = $this->feed->getCollection();
+        $collection->addFieldToFilter("id_item",$id);
+        $collection->addFieldToFilter("oi",$oi);
+        $collection->addFieldToFilter("type",$type);
+        $collection->addFieldToFilter(
+            'updated_at',
+            array('null' => true)
+        );
+        $collection->addFieldToFilter(
+            'created_at',
+            array('null' => true)
+        );
+
+        if($collection->getSize() < 1 ){
+            $this->feed->setIdItem($id);
+            $this->feed->setType($type);
+            $this->feed->setOi($oi);
+            $this->feed->save();
+        }
     }
 
 }

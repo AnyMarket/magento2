@@ -43,11 +43,19 @@ class CallbackToAnyCatalogInventoryAtSourceItemsSavePlugin
     protected $_objectManager;
 
     /**
+     * @var StoreManagerInterface
+     */
+    protected $storeManager;
+
+
+    /**
      */
     public function __construct(
-        \Magento\Framework\ObjectManagerInterface $objectManager
+        \Magento\Framework\ObjectManagerInterface $objectManager,
+        \Magento\Store\Model\StoreManagerInterface $storeManager
     ) {
         $this->_objectManager = $objectManager;
+        $this->storeManager = $storeManager;
 
         $this->defaultSourceProvider = interface_exists(\Magento\InventoryCatalogApi\Api\DefaultSourceProviderInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryCatalogApi\Api\DefaultSourceProviderInterface::class):null;
         $this->isSourceItemsAllowedForProductType = interface_exists(\Magento\InventoryConfigurationApi\Model\IsSourceItemManagementAllowedForProductTypeInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryConfigurationApi\Model\IsSourceItemManagementAllowedForProductTypeInterface::class):null;
@@ -74,23 +82,23 @@ class CallbackToAnyCatalogInventoryAtSourceItemsSavePlugin
             if(!$storeId){
                 $storeId = 1;
             }
-
             $helper = $this->_objectManager->create('Anymarket\Anymarket\Helper\Data');
-
             $enabled = $helper->getGeneralConfig('anyConfig/general/enable', $storeId);
-            $canSyncOrder = $helper->getGeneralConfig('anyConfig/support/create_order_in_anymarket', $storeId);
-            if ($enabled == "1" && $canSyncOrder == "0") {
-                $productId = $this->_objectManager->get('Magento\Catalog\Model\Product')->getIdBySku($item->getSku());
+            foreach ($this->storeManager->getStores() as $storeId => $storeData) {
+                $canSyncOrder = $helper->getGeneralConfig('anyConfig/support/create_order_in_anymarket', $storeId);
+                if ($enabled == "1" && $canSyncOrder == "0") {
+                    $productId = $this->_objectManager->get('Magento\Catalog\Model\Product')->getIdBySku($item->getSku());
 
-                $product = $this->_objectManager->create('Magento\Catalog\Model\Product')->load($productId);
+                    $product = $this->_objectManager->create('Magento\Catalog\Model\Product')->load($productId);
 
-                $oi = $helper->getGeneralConfig('anyConfig/general/oi', $storeId);
-                if ($feed = $helper->getGeneralConfig('anyConfig/general/feedStock', $storeId) == "1") {
-                    $this->saveFeed($product->getSku(), "0", $oi);
-                } else {
-                    $host = $helper->getGeneralConfig('anyConfig/general/host', $storeId);
-                    $host = $host . "/public/api/anymarketcallback/stockPrice";
-                    $helper->doCallAnymarket($host, $oi, "", $product->getSku());
+                    $oi = $helper->getGeneralConfig('anyConfig/general/oi', $storeId);
+                    if ($feed = $helper->getGeneralConfig('anyConfig/general/feedStock', $storeId) == "1") {
+                        $this->saveFeed($product->getSku(), "0", $oi);
+                    } else {
+                        $host = $helper->getGeneralConfig('anyConfig/general/host', $storeId);
+                        $host = $host . "/public/api/anymarketcallback/stockPrice";
+                        $helper->doCallAnymarket($host, $oi, "", $product->getSku());
+                    }
                 }
             }
         }
@@ -99,9 +107,24 @@ class CallbackToAnyCatalogInventoryAtSourceItemsSavePlugin
     private function saveFeed($id, $type, $oi)
     {
         $modelFeed = $this->_objectManager->create('Anymarket\Anymarket\Model\Anymarketfeed');
-        $modelFeed->setIdItem($id);
-        $modelFeed->setType($type);
-        $modelFeed->setOi($oi);
-        $modelFeed->save();
+        $collection = $modelFeed->getCollection();
+        $collection->addFieldToFilter("id_item",$id);
+        $collection->addFieldToFilter("oi",$oi);
+        $collection->addFieldToFilter("type",$type);
+        $collection->addFieldToFilter(
+            'updated_at',
+            array('null' => true)
+        );
+        $collection->addFieldToFilter(
+            'created_at',
+            array('null' => true)
+        );
+    
+        if($collection->getSize() < 1 ){
+            $modelFeed->setIdItem($id);
+            $modelFeed->setType($type);
+            $modelFeed->setOi($oi);
+            $modelFeed->save();
+        }
     }
 }
