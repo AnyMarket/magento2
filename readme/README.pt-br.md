@@ -1,7 +1,7 @@
 Módulo de integração ANYMARKET e Magento 2.x.x
 ===========================================
 ---
-Versão atual do módulo: **3.4.0**
+Versão atual do módulo: **3.5.0**
 ---
 
 **Versões Magento 2**
@@ -12,6 +12,7 @@ Versão atual do módulo: **3.4.0**
 | 2.3.5  |               Homologado                | Homologado, fluxos de backoffice e canal de venda liberados 100% para integração;                                                                                                                       |
 | 2.4.3  | Homologado <br/>(1 problema encontrado) | Homologado, fluxo de backoffice liberado para integração, fluxo canal de venda liberado com a seguinte ressalva:<br/> - Configuração de escopo de preço que necessita ser feito por Store View;         |
 | 2.4.5  | Homologado <br/>(1 problema encontrado) | Homologado, fluxo de backoffice liberado para integração, fluxo canal de venda liberado com as seguintes ressalvas:<br/> - Configuração de escopo de preço que necessita ser feito por Store View;<br/> |
+| 2.4.6  | Homologado <br/>(1 problema encontrado) | Homologado, fluxo de backoffice liberado para integração, fluxo canal de venda liberado com as seguintes ressalvas:<br/> - Configuração de escopo de preço que necessita ser feito por Store View;<br/> |
 
 > **IMPORTANTE**
 > - Antes de realizar qualquer atualização de versão do Magento, deverá ser comunicado o time de suporte (**suporte@anymarket.com.br**) para que seja feito o
