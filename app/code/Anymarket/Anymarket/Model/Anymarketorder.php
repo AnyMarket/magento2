@@ -13,4 +13,3 @@ class Anymarketorder extends \Magento\Framework\Model\AbstractModel
         $this->_init('Anymarket\Anymarket\Model\ResourceModel\Anymarketorder');
     }
 }
-?>

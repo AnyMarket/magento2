@@ -26,8 +26,16 @@
         </arguments>
     </virtualType>
 
-	 <type name="Magento\InventoryApi\Api\SourceItemsSaveInterface">
+	<type name="Magento\InventoryApi\Api\SourceItemsSaveInterface">
         <plugin name="callback_to_any_catalog_inventory_at_source_items_save"
                 type="Anymarket\Anymarket\Plugin\CallbackToAnyCatalogInventoryAtSourceItemsSavePlugin"/>
+    </type>
+	<type name="MagMagento\CatalogInventory\Observer\SaveInventoryDataObserver">
+        <plugin name="callback_to_any_catalog_inventory_items_save"
+                type="Anymarket\Anymarket\Plugin\CallbackToAnyCatalogInventoryAtSourceItemsSavePlugin"/>
+    </type>
+
+    <type name="Magento\Sales\Api\OrderItemRepositoryInterface">
+        <plugin name="orderItemSourceAny" type="Anymarket\Anymarket\Plugin\Api\OrderItemRepository" />
     </type>
 </config>

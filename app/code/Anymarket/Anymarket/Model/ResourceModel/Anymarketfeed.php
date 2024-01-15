@@ -13,4 +13,3 @@ class Anymarketfeed extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         $this->_init('anymarket_feed', 'entity_id');
     }
 }
-?>

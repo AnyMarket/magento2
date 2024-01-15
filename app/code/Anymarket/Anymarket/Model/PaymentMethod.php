@@ -13,6 +13,16 @@ class PaymentMethod
     private $scopeResolver;
 
     /**
+     * @var \Magento\Payment\Model\Config
+     */
+    protected $paymentConfig;
+
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    /**
     * @param Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     * @param Magento\Payment\Model\Config $payConfig
     */

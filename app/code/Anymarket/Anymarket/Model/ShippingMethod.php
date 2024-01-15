@@ -7,6 +7,16 @@ use Magento\Shipping\Model\Config\Source\Allmethods;
 class ShippingMethod
 {
     /**
+     * @var \Magento\Shipping\Model\Config
+     */
+    protected $shipconfig;
+
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    /**
      * @var \Magento\Framework\App\ScopeResolverInterface
      */
     private $scopeResolver;
