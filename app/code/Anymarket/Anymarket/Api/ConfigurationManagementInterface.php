@@ -15,7 +15,7 @@ interface ConfigurationManagementInterface
 
     /**
      * Get Configuration from Anymarket
-     * @return string
+     * @return mixed[]
      */
     public function getConfiguration();
 }
