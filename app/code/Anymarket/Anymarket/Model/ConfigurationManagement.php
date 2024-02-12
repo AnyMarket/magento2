@@ -5,7 +5,7 @@ namespace Anymarket\Anymarket\Model;
 class ConfigurationManagement
 {
 
-    const VERSION = "3.3.0";
+    const VERSION = "3.5.0";
 
     protected $msi = true;
 
@@ -50,7 +50,8 @@ class ConfigurationManagement
      */
     public function getConfiguration()
     {
-        $data = (array("version"=> self::VERSION, "msi"=> $this->msi));
+        $data = array();
+        $data[] = array("version"=> self::VERSION, "msi"=> $this->msi);
         
         return $data;
     }
