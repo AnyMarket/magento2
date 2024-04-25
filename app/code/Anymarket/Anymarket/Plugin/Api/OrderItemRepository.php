@@ -109,51 +109,61 @@ class OrderItemRepository {
             $items = $searchResult->getItems();
             
             foreach ($items as &$item) {
-                $store_id = $item->getData("store_id");
-                $stock = $this->_stockItemRepository->get($item->getData("product_id"));
-                $stock_id =$stock->getStockId();
-                if($stock_id){
-                    foreach ($this->getSourcesAssignedToStockOrderedByPriority->execute($stock_id) as $itemSource) {
-                        $sources = $itemSource->getData();
-                    }    
-                }
-                $source = 0;
-                if($this->searchCriteriaBuilder){
-                    $searchCriteria = $this->searchCriteriaBuilder
-                    ->addFilter(SourceItemInterface::SKU, $item->getSku())
-                    ->create();    
+                $product_type = $item->getProductType();
 
-                    if($this->sourceItemRepository){
-                        $result = $this->sourceItemRepository->getList($searchCriteria)->getItems();
-                        if($result){
-                            foreach($result as $sourceData){
-                                $source = $sourceData->getSourceCode();
-                                $sourceData = $this->sourceRepository->get($source);
+                try{                    
+                    if( $product_type == "simple"){
+                        $store_id = $item->getData("store_id");
+                        $stock = $this->_stockItemRepository->get($item->getData("product_id"));
+                        $stock_id =$stock->getStockId();
+                        if($stock_id){
+                            foreach ($this->getSourcesAssignedToStockOrderedByPriority->execute($stock_id) as $itemSource) {
+                                $sources = $itemSource->getData();
+                            }    
+                        }
+                        $source = 0;
+                        if($this->searchCriteriaBuilder){
+                            $searchCriteria = $this->searchCriteriaBuilder
+                            ->addFilter(SourceItemInterface::SKU, $item->getSku())
+                            ->create();    
+
+                            if($this->sourceItemRepository){
+                                $result = $this->sourceItemRepository->getList($searchCriteria)->getItems();
+                                if($result){
+                                    foreach($result as $sourceData){
+                                        $source = $sourceData->getSourceCode();
+                                        $sourceData = $this->sourceRepository->get($source);
+                                    }
+                                }
                             }
                         }
+
+                        $option =  $item->getProductOption();
+                        $optionId = null;
+                        if( $option ){
+                            $options = $option->getExtensionAttributes()->getCustomOptions();
+                            if(is_array($options)){
+                                foreach($options as $op){
+                                    $optionValue = $op->getOptionValue();
+                                    $optionId = $op->getOptionId();
+                                }
+                            }
+                        }
+
+                        if($optionId){
+                            $source = $optionId;
+                        }else if(!$source){
+                            $source = "default";
+                        }
+
+                        $extensionAttributes = $item->getExtensionAttributes();
+                        $extensionAttributes = $extensionAttributes ? $extensionAttributes : $this->extensionFactory->create();
+                        $extensionAttributes->setSource($source);
+                        $item->setExtensionAttributes($extensionAttributes);
                     }
-                }
+                }catch(\Exception $e){
 
-                $option =  $item->getProductOption();
-                $optionId = null;
-                if( $option ){
-                    $options = $option->getExtensionAttributes()->getCustomOptions();
-                    foreach($options as $op){
-                        $optionValue = $op->getOptionValue();
-                        $optionId = $op->getOptionId();
-                    }
                 }
-
-                if($optionId){
-                    $source = $optionId;
-                }else if(!$source){
-                    $source = "default";
-                }
-
-                $extensionAttributes = $item->getExtensionAttributes();
-                $extensionAttributes = $extensionAttributes ? $extensionAttributes : $this->extensionFactory->create();
-                $extensionAttributes->setSource($source);
-                $item->setExtensionAttributes($extensionAttributes);
             }
         } 
         return $searchResult;
