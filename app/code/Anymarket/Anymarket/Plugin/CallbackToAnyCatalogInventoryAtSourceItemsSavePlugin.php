@@ -43,19 +43,25 @@ class CallbackToAnyCatalogInventoryAtSourceItemsSavePlugin
     protected $_objectManager;
 
     /**
-     * @var StoreManagerInterface
+     * @var Data
      */
-    protected $storeManager;
+    protected $helper;
 
+    /**
+     * @var Product
+     */
+    protected $productFactory;
 
     /**
      */
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        \Anymarket\Anymarket\Helper\Data $helper,
+        \Magento\Catalog\Model\ProductFactory $productFactory
     ) {
         $this->_objectManager = $objectManager;
-        $this->storeManager = $storeManager;
+        $this->helper = $helper;
+        $this->productFactory = $productFactory;
 
         $this->defaultSourceProvider = interface_exists(\Magento\InventoryCatalogApi\Api\DefaultSourceProviderInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryCatalogApi\Api\DefaultSourceProviderInterface::class):null;
         $this->isSourceItemsAllowedForProductType = interface_exists(\Magento\InventoryConfigurationApi\Model\IsSourceItemManagementAllowedForProductTypeInterface::class)?ObjectManager::getInstance()->get(\Magento\InventoryConfigurationApi\Model\IsSourceItemManagementAllowedForProductTypeInterface::class):null;
@@ -74,32 +80,38 @@ class CallbackToAnyCatalogInventoryAtSourceItemsSavePlugin
     public function afterExecute(SourceItemsSaveInterface $subject, $result, array $sourceItems): void
     {
         $sourceItemsForSynchronization = [];
-
-        
+        $itemOi = [];
         foreach ($sourceItems as $item) {
-
-            $storeId = $item->getStoreId();
-            if(!$storeId){
-                $storeId = 1;
-            }
-            $helper = $this->_objectManager->create('Anymarket\Anymarket\Helper\Data');
-            $enabled = $helper->getGeneralConfig('anyConfig/general/enable', $storeId);
-            foreach ($this->storeManager->getStores() as $storeId => $storeData) {
-                $canSyncOrder = $helper->getGeneralConfig('anyConfig/support/create_order_in_anymarket', $storeId);
+            
+            $product = $this->productFactory->create();
+            $product->load($product->getIdBySku($item->getSku()));
+            
+            foreach ($product->getStoreIds() as $id => $storeId) {
+                $enabled =  $this->helper->getGeneralConfig('anyConfig/general/enable', $storeId);
+                $canSyncOrder =  $this->helper->getGeneralConfig('anyConfig/support/create_order_in_anymarket', $storeId);
                 if ($enabled == "1" && $canSyncOrder == "0") {
-                    $productId = $this->_objectManager->get('Magento\Catalog\Model\Product')->getIdBySku($item->getSku());
+                    
+                    $oi =  $this->helper->getGeneralConfig('anyConfig/general/oi', $storeId);
+                    $host =  $this->helper->getGeneralConfig('anyConfig/general/host', $storeId);
+                    $host = $host . "/public/api/anymarketcallback/stockPrice";
 
-                    $product = $this->_objectManager->create('Magento\Catalog\Model\Product')->load($productId);
-
-                    $oi = $helper->getGeneralConfig('anyConfig/general/oi', $storeId);
-                    if ($feed = $helper->getGeneralConfig('anyConfig/general/feedStock', $storeId) == "1") {
-                        $this->saveFeed($product->getSku(), "0", $oi);
-                    } else {
-                        $host = $helper->getGeneralConfig('anyConfig/general/host', $storeId);
-                        $host = $host . "/public/api/anymarketcallback/stockPrice";
-                        $helper->doCallAnymarket($host, $oi, "", $product->getSku());
+                    if(!isset($itemOi[$oi])){
+                        $itemOi[$oi] = [
+                            "feed" =>  $this->helper->getGeneralConfig('anyConfig/general/feedStock', $storeId),
+                            "host" => $host,
+                            "itemId" => $product->getSku()
+                        ];
                     }
                 }
+            }   
+        }
+
+        foreach($itemOi as $oi=>$item){
+ 
+            if ($item["feed"] == "1") {
+                $this->saveFeed($product->getSku(), "0", $oi);
+            } else {
+                $this->helper->doCallAnymarket($item["host"], $oi,"" ,$item["itemId"]);
             }
         }
     }

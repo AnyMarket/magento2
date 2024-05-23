@@ -60,29 +60,37 @@ class CheckoutAllSubmitAfterObserver implements ObserverInterface
     {
         $quote = $observer->getEvent()->getQuote();
 
+        $itemOi = [];
         foreach ($quote->getAllItems() as $item) {
 
-            $storeId = $item->getStoreId();
-            if(!$storeId){
-                $storeId = 1;
-            }
-            
-            foreach ($this->storeManager->getStores() as $storeId => $storeData) {
+            $product = $this->productFactory->create();
+            $product->load($product->getIdBySku($item->getSku()));
+
+            foreach ($product->getStoreIds() as $id => $storeId) {
                 $enabled = $this->helper->getGeneralConfig('anyConfig/general/enable', $storeId);
                 $canSyncOrder = $this->helper->getGeneralConfig('anyConfig/support/create_order_in_anymarket', $storeId);
                 if ($enabled == "1" && $canSyncOrder == "0") {
-                    $productId = $this->productFactory->create()->getIdBySku($item->getSku());
-                    $product = $this->productFactory->create()->load($productId);
 
                     $oi = $this->helper->getGeneralConfig('anyConfig/general/oi', $storeId);
-                    if ($feed = $this->helper->getGeneralConfig('anyConfig/general/feedStock', $storeId) == "1") {
-                        $this->saveFeed($product->getSku(), "0", $oi);
-                    } else {
-                        $host = $this->helper->getGeneralConfig('anyConfig/general/host', $storeId);
-                        $host = $host . "/public/api/anymarketcallback/stockPrice";
-                        $this->helper->doCallAnymarket($host, $oi, "", $product->getSku());
+                    $host =  $this->helper->getGeneralConfig('anyConfig/general/host', $storeId);
+                    $host = $host . "/public/api/anymarketcallback/stockPrice";
+
+                    if(!isset($itemOi[$oi])){
+                        $itemOi[$oi] = [
+                            "feed" =>  $this->helper->getGeneralConfig('anyConfig/general/feedStock', $storeId),
+                            "host" => $host,
+                            "itemId" => $product->getSku()
+                        ];
                     }
                 }
+            }
+        }
+        foreach($itemOi as $oi=>$item){
+ 
+            if ($item["feed"] == "1") {
+                $this->saveFeed($product->getSku(), "0", $oi);
+            } else {
+                $this->helper->doCallAnymarket($item["host"], $oi,"" ,$item["itemId"]);
             }
         }
         return $this;

@@ -30,7 +30,7 @@
         <plugin name="callback_to_any_catalog_inventory_at_source_items_save"
                 type="Anymarket\Anymarket\Plugin\CallbackToAnyCatalogInventoryAtSourceItemsSavePlugin"/>
     </type>
-	<type name="MagMagento\CatalogInventory\Observer\SaveInventoryDataObserver">
+	<type name="Magento\CatalogInventory\Observer\SaveInventoryDataObserver">
         <plugin name="callback_to_any_catalog_inventory_items_save"
                 type="Anymarket\Anymarket\Plugin\CallbackToAnyCatalogInventoryAtSourceItemsSavePlugin"/>
     </type>
