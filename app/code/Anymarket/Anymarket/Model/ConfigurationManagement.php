@@ -5,7 +5,7 @@ namespace Anymarket\Anymarket\Model;
 class ConfigurationManagement
 {
 
-    const VERSION = "3.5.0";
+    const VERSION = "3.5.1";
 
     protected $msi = true;
 

@@ -8,7 +8,7 @@ class VersionMethod
 
     public function __construct(
     ) {
-        $this->version = "3.5.0";
+        $this->version = "3.5.1";
     }
 
     public function getVersion(){

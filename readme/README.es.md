@@ -1,7 +1,7 @@
 Módulo de integración ANYMARKET y Magento 2.x.x
 ===========================================
 ---
-Versión actual del módulo: **3.5.0**
+Versión actual del módulo: **3.5.1**
 ---
 
 **Versiones Magento 2**
