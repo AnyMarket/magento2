@@ -64,25 +64,44 @@ class ProductStockSave implements ObserverInterface
     {
         $item = $observer->getEvent()->getItem();
         $storeId = $item->getStoreId();
+        $itemOi = [];
 
         $helper = $this->_objectManager->create('Anymarket\Anymarket\Helper\Data');
 
-        foreach ($this->storeManager->getStores() as $storeId => $storeData) {
-            $enabled = $helper->getGeneralConfig('anyConfig/general/enable', $storeId);
-            $canSyncOrder = $helper->getGeneralConfig('anyConfig/support/create_order_in_anymarket', $storeId);
-            if ($enabled == "1" && $canSyncOrder == "0") {
-                $product = $this->_objectManager->create('Magento\Catalog\Model\Product')->load($item->getProductId());
+        $enabled = $helper->getGeneralConfig('anyConfig/general/enable', $storeId);
+        $canSyncOrder = $helper->getGeneralConfig('anyConfig/support/create_order_in_anymarket', $storeId);
+        if ($enabled == "1" && $canSyncOrder == "0") {
+            $product = $this->_objectManager->create('Magento\Catalog\Model\Product')->load($item->getProductId());
 
-                $oi = $helper->getGeneralConfig('anyConfig/general/oi', $storeId);
-                if ($feed = $helper->getGeneralConfig('anyConfig/general/feedStock', $storeId) == "1") {
+            foreach ($product->getStoreIds() as $id => $storeId) {
+                $enabled =  $helper->getGeneralConfig('anyConfig/general/enable', $storeId);
+                $canSyncOrder =  $helper->getGeneralConfig('anyConfig/support/create_order_in_anymarket', $storeId);
+                if ($enabled == "1" && $canSyncOrder == "0") {
+                    
+                    $oi =  $helper->getGeneralConfig('anyConfig/general/oi', $storeId);
+                    $host =  $helper->getGeneralConfig('anyConfig/general/host', $storeId);
+                    $host = $host . "/public/api/anymarketcallback/stockPrice";
+
+                    if(!isset($itemOi[$oi])){
+                        $itemOi[$oi] = [
+                            "feed" =>  $helper->getGeneralConfig('anyConfig/general/feedStock', $storeId),
+                            "host" => $host,
+                            "itemId" => $product->getSku()
+                        ];
+                    }
+                }
+            }
+            
+            foreach($itemOi as $oi=>$item){
+ 
+                if ($item["feed"] == "1") {
                     $this->saveFeed($product->getSku(), "0", $oi);
                 } else {
-                    $host = $helper->getGeneralConfig('anyConfig/general/host', $storeId);
-                    $host = $host . "/public/api/anymarketcallback/stockPrice";
-                    $helper->doCallAnymarket($host, $oi, "", $product->getSku());
+                    $helper->doCallAnymarket($item["host"], $oi,"" ,$item["itemId"]);
                 }
             }
         }
+        
         return $this;
     }
 }
